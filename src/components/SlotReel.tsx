@@ -87,7 +87,7 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
               stopped ? 'text-primary text-glow-orange' : 'text-foreground'
             }`}
           >
-            {displayName || '—'}
+            {displayName || '?'}
           </motion.div>
         )}
 
