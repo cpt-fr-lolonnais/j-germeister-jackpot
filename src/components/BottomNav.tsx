@@ -3,7 +3,7 @@ import { Users, BarChart3 } from 'lucide-react';
 
 const tabs = [
   { path: '/players', label: 'Spieler', icon: Users, isMain: false },
-  { path: '/', label: 'Hirschjagd', icon: Crosshair, isMain: true },
+  { path: '/', label: 'Hirschjagd', icon: null, isMain: true },
   { path: '/stats', label: 'Statistik', icon: BarChart3, isMain: false },
 ];
 
