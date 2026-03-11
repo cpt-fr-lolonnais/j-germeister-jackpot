@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Stats } from '@/hooks/useGameState';
-import { Trophy, Turtle } from 'lucide-react';
+import ShotGlass from '@/components/ShotGlass';
 
 interface Props {
   stats: Stats;
@@ -53,7 +53,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
       {/* Leaderboard */}
       <div className="mb-6">
         <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
-          🥃 Trink-Rangliste
+          <ShotGlass className="w-3 h-3 inline-block" /> Trink-Rangliste
         </h2>
         {leaderboardWithRank.length === 0 ? (
           <p className="text-center text-muted-foreground text-xs font-orbitron">Noch keine Runden gespielt.</p>
@@ -72,7 +72,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 </span>
                 <span className="flex-1 font-orbitron font-bold text-sm text-foreground">{p.name}</span>
                 <span className="font-orbitron font-bold text-primary text-glow-orange">{p.drinks}</span>
-                <span className="text-xs text-muted-foreground">🥃</span>
+                <span className="text-xs text-muted-foreground"><ShotGlass className="w-3 h-3 inline-block" /></span>
               </motion.div>
             ))}
           </div>
@@ -94,7 +94,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 ) : (
                   <>Meister {r.master} → {r.deer1} vs {r.deer2} · Verlierer: {r.loser}</>
                 )}
-                {' '}({r.jaegerConsumed}🥃)
+                {' '}({r.jaegerConsumed}<ShotGlass className="w-3 h-3 inline-block" />)
               </div>
             ))}
           </div>
