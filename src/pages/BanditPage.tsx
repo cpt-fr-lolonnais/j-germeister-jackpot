@@ -140,7 +140,7 @@ export default function BanditPage({
             className="fixed inset-0 z-50 flex items-center justify-center bg-background/80"
           >
             <div className="font-arcade text-xl text-jaeger-gold text-glow-gold animate-glitch">
-              ⚡ DOPPELGÄNGER ⚡
+              DOPPELGÄNGER
             </div>
           </motion.div>
         )}
