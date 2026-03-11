@@ -32,7 +32,7 @@ export default function StatsPage({ stats, resetAll, deleteRound, isAdmin, check
   });
 
   return (
-    <div className="p-4 pt-8 pb-24 max-w-md mx-auto">
+    <div className="p-4 pt-12 pb-24 max-w-md mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div className="w-10" />
         <h1 className="font-fraktur text-4xl text-center text-primary text-glow-orange">Statistik</h1>
