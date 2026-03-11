@@ -121,7 +121,7 @@ export default function BanditPage({
           >
             <div className="text-center">
               <div className="font-arcade text-2xl text-jaeger-gold text-glow-gold animate-flash mb-4">
-                🎰 JACKPOT!!! 🎰
+                JACKPOT!!!
               </div>
               <div className="font-fraktur text-4xl text-primary text-glow-orange">
                 {master}
