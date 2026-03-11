@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Stats } from '@/hooks/useGameState';
-import { Trophy, Turtle } from 'lucide-react';
+import ShotGlass from '@/components/ShotGlass';
 
 interface Props {
   stats: Stats;
