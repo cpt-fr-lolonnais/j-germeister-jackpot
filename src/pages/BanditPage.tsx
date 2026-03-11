@@ -244,7 +244,7 @@ export default function BanditPage({
               {isDoppel ? (
                 <>
                   <p className="font-orbitron text-sm text-foreground">
-                    <span className="text-primary font-bold">{master}</span> ist Meister UND Hirsch!
+                    <span className="text-primary font-bold">{master}</span> ist Jäger UND Hirsch!
                     <br />Er tritt an gegen <span className="text-primary font-bold">{deer1 === master ? deer2 : deer1}</span>!
                   </p>
                   <p className="font-arcade text-[10px] text-muted-foreground">Wer hat die Challenge VERLOREN?</p>
