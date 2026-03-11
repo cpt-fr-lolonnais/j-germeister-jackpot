@@ -177,7 +177,7 @@ export function useGameState() {
 
   return {
     players, activePlayers, addPlayer, removePlayer, togglePlayer,
-    gameState, startSpin, revealMaster, startDeerSpin, revealDeers, resolveChallenge, resetRound,
+    gameState, startSpin, revealMaster, startDeerSpin, revealDeers, resolveChallengeNormal, resolveChallengeDoppel, resetRound,
     stats, resetAll, pickRandom
   };
 }
