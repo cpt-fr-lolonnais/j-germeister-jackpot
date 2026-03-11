@@ -177,7 +177,7 @@ export default function BanditPage({
           className="py-12"
         >
           <div className="font-arcade text-xl text-jaeger-gold text-glow-gold mb-4">
-            🏁 ALLE JÄGER VERNICHTET! 🏁
+            ALLE JÄGER VERNICHTET!
           </div>
           <div className="font-fraktur text-3xl text-primary text-glow-orange">
             Das Massaker ist vorbei!
