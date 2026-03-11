@@ -14,7 +14,102 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      game_config: {
+        Row: {
+          admin_pin: string
+          created_at: string | null
+          id: string
+          jaeger_remaining: number
+          total_jaeger: number
+        }
+        Insert: {
+          admin_pin?: string
+          created_at?: string | null
+          id?: string
+          jaeger_remaining?: number
+          total_jaeger?: number
+        }
+        Update: {
+          admin_pin?: string
+          created_at?: string | null
+          id?: string
+          jaeger_remaining?: number
+          total_jaeger?: number
+        }
+        Relationships: []
+      }
+      player_drinks: {
+        Row: {
+          drinks: number
+          name: string
+        }
+        Insert: {
+          drinks?: number
+          name: string
+        }
+        Update: {
+          drinks?: number
+          name?: string
+        }
+        Relationships: []
+      }
+      players: {
+        Row: {
+          active: boolean
+          created_at: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      rounds: {
+        Row: {
+          created_at: string | null
+          deer1: string
+          deer2: string
+          id: string
+          jaeger_consumed: number
+          loser: string | null
+          master: string
+          round_number: number
+          second_drinker: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          deer1: string
+          deer2: string
+          id?: string
+          jaeger_consumed: number
+          loser?: string | null
+          master: string
+          round_number: number
+          second_drinker?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          deer1?: string
+          deer2?: string
+          id?: string
+          jaeger_consumed?: number
+          loser?: string | null
+          master?: string
+          round_number?: number
+          second_drinker?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
