@@ -46,7 +46,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
         </div>
         {jaegerRemaining <= 0 && (
           <p className="font-arcade text-xs text-jaeger-gold text-glow-gold mt-3">
-            🏁 ALLE JÄGER VERNICHTET! 🏁
+            ALLE JÄGER VERNICHTET!
           </p>
         )}
       </div>
