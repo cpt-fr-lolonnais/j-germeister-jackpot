@@ -163,7 +163,6 @@ export default function BanditPage({
         <div className="w-full h-3 bg-muted rounded-full mt-3 overflow-hidden">
           <motion.div
             className="h-full bg-primary rounded-full"
-            initial={false}
             animate={{ width: `${(stats.jaegerRemaining / stats.totalJaeger) * 100}%` }}
             transition={{ duration: 0.5 }}
           />
