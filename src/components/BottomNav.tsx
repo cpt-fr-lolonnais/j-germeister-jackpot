@@ -24,12 +24,12 @@ export default function BottomNav() {
                 onClick={() => navigate(tab.path)}
                 className="flex flex-col items-center -mt-5"
               >
-                <div className={`w-14 h-14 rounded-full flex items-center justify-center border-2 border-background transition-all ${
+      <div className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all ${
                   active 
-                    ? 'bg-primary box-glow-orange' 
-                    : 'bg-primary/80'
+                    ? 'bg-primary border-primary box-glow-orange' 
+                    : 'bg-muted border-border'
                 }`}>
-                  <tab.icon className="w-7 h-7 text-primary-foreground" />
+                  <tab.icon className={`w-7 h-7 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
                 </div>
                 <span className={`text-[9px] font-orbitron font-bold uppercase tracking-wider mt-1 ${
                   active ? 'text-primary text-glow-orange' : 'text-muted-foreground'
