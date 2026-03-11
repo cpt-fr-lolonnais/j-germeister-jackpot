@@ -326,7 +326,7 @@ export default function BanditPage({
               )}
               <motion.button
                 whileTap={{ scale: 0.95 }}
-                onClick={resetRound}
+                onClick={() => { setLocalResult(null); resetRound(); }}
                 className="w-full py-3 rounded-xl font-arcade text-xs bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
               >
                 NÄCHSTE RUNDE →
