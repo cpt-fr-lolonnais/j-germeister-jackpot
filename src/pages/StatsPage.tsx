@@ -46,7 +46,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
         </div>
         {jaegerRemaining <= 0 && (
           <p className="font-arcade text-xs text-jaeger-gold text-glow-gold mt-3">
-            🏁 ALLE JÄGER VERNICHTET! 🏁
+            ALLE JÄGER VERNICHTET!
           </p>
         )}
       </div>
@@ -54,7 +54,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
       {/* Leaderboard */}
       <div className="mb-6">
         <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
-          <JaegerBottle className="w-3 h-5 inline-block" /> Trink-Rangliste
+          <JaegerBottle className="w-3 h-5 inline-block" /> TRINK-RANGLISTE
         </h2>
         {leaderboardWithRank.length === 0 ? (
           <p className="text-center text-muted-foreground text-xs font-orbitron">Noch keine Runden gespielt.</p>
@@ -69,7 +69,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 className="flex items-center gap-3 p-3 rounded-lg bg-card neon-border"
               >
                 <span className="font-arcade text-xs w-6 text-center text-muted-foreground">
-                  {p.rank === 1 ? '👑' : (p.rank === lastRank && lastRank !== firstRank) ? '🐢' : `${p.rank}.`}
+                  {`${p.rank}.`}
                 </span>
                 <span className="flex-1 font-orbitron font-bold text-sm text-foreground">{p.name}</span>
                 <span className="font-orbitron font-bold text-primary text-glow-orange">{p.drinks}</span>
@@ -84,7 +84,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
       {rounds.length > 0 && (
         <div className="mb-6">
           <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
-            📜 Rundenverlauf
+            RUNDENVERLAUF
           </h2>
           <div className="space-y-1 max-h-60 overflow-y-auto">
             {[...rounds].reverse().map((r) => (
@@ -111,7 +111,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
         }}
         className="w-full py-3 rounded-lg font-arcade text-[10px] bg-destructive text-destructive-foreground hover:opacity-90 transition"
       >
-        🗑️ ALLES ZURÜCKSETZEN
+        ALLES ZURÜCKSETZEN
       </button>
     </div>
   );

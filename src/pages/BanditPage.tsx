@@ -95,10 +95,10 @@ export default function BanditPage({
 
   const getButtonLabel = () => {
     switch (phase) {
-      case 'idle': return '🎰 SPIN!';
-      case 'master_spinning': return '⏳ DREHT...';
-      case 'master_revealed': return '🦌 HIRSCHE JAGEN!';
-      case 'deer_spinning': return '⏳ DREHT...';
+      case 'idle': return 'SPIN!';
+      case 'master_spinning': return 'DREHT...';
+      case 'master_revealed': return 'HIRSCHE JAGEN!';
+      case 'deer_spinning': return 'DREHT...';
       default: return '';
     }
   };
@@ -121,7 +121,7 @@ export default function BanditPage({
           >
             <div className="text-center">
               <div className="font-arcade text-2xl text-jaeger-gold text-glow-gold animate-flash mb-4">
-                🎰 JACKPOT!!! 🎰
+                JACKPOT!!!
               </div>
               <div className="font-fraktur text-4xl text-primary text-glow-orange">
                 {master}
@@ -140,7 +140,7 @@ export default function BanditPage({
             className="fixed inset-0 z-50 flex items-center justify-center bg-background/80"
           >
             <div className="font-arcade text-xl text-jaeger-gold text-glow-gold animate-glitch">
-              ⚡ DOPPELGÄNGER ⚡
+              DOPPELGÄNGER
             </div>
           </motion.div>
         )}
@@ -155,11 +155,12 @@ export default function BanditPage({
       </div>
 
       {/* Jäger Counter */}
-      <div className="neon-border rounded-lg p-3 mb-6 bg-card/50">
-        <span className="font-orbitron font-bold text-lg">
-          🦌 {stats.jaegerRemaining}/{stats.totalJaeger} JÄGER ÜBRIG
-        </span>
-        <div className="w-full h-2 bg-muted rounded-full mt-2 overflow-hidden">
+      <div className="neon-border rounded-lg p-4 mb-6 bg-card/50 text-center">
+        <div className="font-orbitron font-bold text-3xl text-foreground">
+          {stats.jaegerRemaining} <span className="text-muted-foreground text-lg">von {stats.totalJaeger}</span>
+        </div>
+        <p className="text-xs font-orbitron text-muted-foreground mt-1">Jägermeister übrig</p>
+        <div className="w-full h-3 bg-muted rounded-full mt-3 overflow-hidden">
           <motion.div
             className="h-full bg-primary rounded-full"
             initial={false}
@@ -176,7 +177,7 @@ export default function BanditPage({
           className="py-12"
         >
           <div className="font-arcade text-xl text-jaeger-gold text-glow-gold mb-4">
-            🏁 ALLE JÄGER VERNICHTET! 🏁
+            ALLE JÄGER VERNICHTET!
           </div>
           <div className="font-fraktur text-3xl text-primary text-glow-orange">
             Das Massaker ist vorbei!
@@ -293,11 +294,11 @@ export default function BanditPage({
             >
               {lastRound.jaegerConsumed === 1 ? (
                 <p className="font-orbitron text-lg text-foreground">
-                  {isDreifach ? '🎰' : '⚡'} <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! <JaegerBottle />
+                  <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! <JaegerBottle />
                 </p>
               ) : (
                 <p className="font-orbitron text-lg text-foreground">
-                  🦌 <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
+                  <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
                     {lastRound.loser}
                   </span> trinken! <JaegerBottle />
                 </p>
