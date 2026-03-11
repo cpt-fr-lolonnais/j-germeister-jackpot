@@ -62,9 +62,25 @@ export default function BanditPage({
     }
   }, [deer1Stopped, deer2Stopped, phase, revealDeers]);
 
+  // Resolve wrappers that set localResult
+  const handleResolveChallengeNormal = (loser: string) => {
+    setLocalResult({ master: master!, loser, jaegerConsumed: 2 });
+    resolveChallengeNormal(loser);
+  };
+
+  const handleResolveChallengeDoppel = (loser: string) => {
+    if (loser === master) {
+      setLocalResult({ master: master!, loser: master!, jaegerConsumed: 1 });
+    } else {
+      setLocalResult({ master: master!, loser, jaegerConsumed: 2 });
+    }
+    resolveChallengeDoppel(loser);
+  };
+
   // Special effects
   useEffect(() => {
     if (isDreifach && phase === 'result') {
+      setLocalResult({ master: master!, loser: master!, jaegerConsumed: 1 });
       setShowSpecial('jackpot');
       const duration = 3000;
       const end = Date.now() + duration;
