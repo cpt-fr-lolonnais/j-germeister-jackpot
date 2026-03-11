@@ -65,8 +65,11 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
     if (revealed) {
       setDisplayName(revealed);
       setStopped(true);
+    } else if (!spinning) {
+      setDisplayName('');
+      setStopped(false);
     }
-  }, [revealed]);
+  }, [revealed, spinning]);
   return (
     <div className={`flex flex-col items-center gap-2 ${inactive ? 'opacity-30' : ''}`}>
       <span className="text-xs font-arcade uppercase tracking-widest text-primary text-glow-orange">
