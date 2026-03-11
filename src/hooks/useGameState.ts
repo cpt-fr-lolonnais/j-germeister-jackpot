@@ -255,12 +255,7 @@ export function useGameState() {
     await supabase.from('game_config').update({ jaeger_remaining: newRemaining }).eq('id', 'main');
 
     // Decrement player_drinks for involved drinkers
-    const drinkers = [roundData.loser];
-    if (roundData.second_drinker) drinkers.push(roundData.second_drinker);
-    // For 2-drink rounds where loser != master, master is the second drinker
-    if (roundData.jaeger_consumed === 2 && !roundData.second_drinker && roundData.loser !== roundData.master) {
-      drinkers.push(roundData.master);
-    }
+    const drinkers: (string | null)[] = [roundData.loser, roundData.second_drinker];
     for (const drinker of drinkers) {
       if (!drinker) continue;
       const { data: existing } = await supabase.from('player_drinks').select('drinks').eq('name', drinker).maybeSingle();
