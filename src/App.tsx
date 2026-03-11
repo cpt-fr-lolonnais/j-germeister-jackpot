@@ -42,7 +42,7 @@ const AppContent = () => {
             />
           } />
           <Route path="/stats" element={
-            <StatsPage stats={gs.stats} resetAll={gs.resetAll} />
+            <StatsPage stats={gs.stats} resetAll={gs.resetAll} deleteRound={gs.deleteRound} />
           } />
           <Route path="*" element={<NotFound />} />
         </Routes>
