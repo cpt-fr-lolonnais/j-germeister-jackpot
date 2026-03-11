@@ -298,7 +298,7 @@ export default function BanditPage({
                 </p>
               ) : (
                 <p className="font-orbitron text-lg text-foreground">
-                  🦌 <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
+                  <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
                     {lastRound.loser}
                   </span> trinken! <JaegerBottle />
                 </p>

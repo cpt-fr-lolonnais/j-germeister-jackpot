@@ -111,7 +111,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
         }}
         className="w-full py-3 rounded-lg font-arcade text-[10px] bg-destructive text-destructive-foreground hover:opacity-90 transition"
       >
-        🗑️ ALLES ZURÜCKSETZEN
+        ALLES ZURÜCKSETZEN
       </button>
     </div>
   );
