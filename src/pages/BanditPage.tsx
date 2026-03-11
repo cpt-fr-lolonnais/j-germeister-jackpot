@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import SlotReel from '@/components/SlotReel';
-import JaegerBottle from '@/components/JaegerBottle';
+
 import { GameState, Stats, Player } from '@/hooks/useGameState';
 
 interface Props {
