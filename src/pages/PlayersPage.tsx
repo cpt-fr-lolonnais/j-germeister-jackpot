@@ -55,7 +55,7 @@ export default function PlayersPage({ players, addPlayer, removePlayer, togglePl
             onChange={e => setName(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleAdd()}
             placeholder="Name eingeben..."
-            className="flex-1 bg-input border border-border rounded-lg px-4 py-3 className="flex-1 bg-input border border-border rounded-lg px-4 py-3 text-foreground font-orbitron text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex-1 bg-input border border-border rounded-lg px-4 py-3 text-foreground font-orbitron text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <button
             onClick={handleAdd}
