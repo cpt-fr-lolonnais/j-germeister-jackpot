@@ -23,7 +23,7 @@ export default function BanditPage({
   startDeerSpin, revealDeers, resolveChallengeNormal, resolveChallengeDoppel, resetRound, pickRandom
 }: Props) {
   const { phase, master, deer1, deer2, isDoppel, isDreifach } = gameState;
-  const names = activePlayers.map(p => p.name);
+  const names = useMemo(() => activePlayers.map(p => p.name), [activePlayers]);
   const canSpin = activePlayers.length >= 3 && stats.jaegerRemaining > 0;
 
   const [showSpecial, setShowSpecial] = useState<'doppel' | 'jackpot' | null>(null);
