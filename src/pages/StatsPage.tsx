@@ -73,7 +73,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 </span>
                 <span className="flex-1 font-orbitron font-bold text-sm text-foreground">{p.name}</span>
                 <span className="font-orbitron font-bold text-primary text-glow-orange">{p.drinks}</span>
-                <span className="text-xs text-muted-foreground">🥃</span>
+                <span className="text-xs text-muted-foreground"><JaegerBottle className="w-3 h-5 inline-block" /></span>
               </motion.div>
             ))}
           </div>
