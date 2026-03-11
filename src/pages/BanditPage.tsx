@@ -274,7 +274,7 @@ export default function BanditPage({
                       <motion.button
                         key={name}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => resolveChallengeDoppel(name)}
+                        onClick={() => handleResolveChallengeDoppel(name)}
                         className="flex-1 py-3 rounded-lg font-orbitron font-bold text-sm bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
                       >
                         {name}
