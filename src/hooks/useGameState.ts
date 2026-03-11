@@ -161,17 +161,17 @@ export function useGameState() {
 
   const resolveChallengeNormal = useCallback((loser: string) => {
     const { master, deer1, deer2 } = gameState;
-    recordDrink(master!, loser, deer1!, deer2!, 2);
+    recordDrink(loser, master!, deer1!, deer2!, 2);
   }, [gameState, recordDrink]);
 
   const resolveChallengeDoppel = useCallback((winner: string) => {
     const { master, deer1, deer2 } = gameState;
     const otherDeer = deer1 === master ? deer2! : deer1!;
     if (winner === master) {
-      // Master won → both drink
-      recordDrink(master!, otherDeer, deer1!, deer2!, 2);
+      // Master gewinnt → otherDeer ist Verlierer, beide trinken
+      recordDrink(otherDeer, master!, deer1!, deer2!, 2);
     } else {
-      // Master lost → master drinks alone
+      // Master verliert → nur Master trinkt
       recordDrink(master!, null, deer1!, deer2!, 1);
     }
   }, [gameState, recordDrink]);

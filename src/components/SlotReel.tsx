@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 interface SlotReelProps {
   names: string[];
@@ -14,46 +14,50 @@ interface SlotReelProps {
 export default function SlotReel({ names, spinning, onStop, label, revealed, inactive = false, spinDuration = 2500 }: SlotReelProps) {
   const [displayName, setDisplayName] = useState('');
   const [stopped, setStopped] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const onStopRef = useRef(onStop);
+  onStopRef.current = onStop;
 
   useEffect(() => {
-    if (spinning && names.length > 0) {
-      setStopped(false);
-      let speed = 50;
-      let elapsed = 0;
+    if (!spinning) return;
+    if (names.length === 0) return;
 
-      const tick = () => {
-        const randomName = names[Math.floor(Math.random() * names.length)];
-        setDisplayName(randomName);
-        elapsed += speed;
+    setStopped(false);
+    let speed = 50;
+    let elapsed = 0;
+    let cancelled = false;
 
-        if (elapsed > spinDuration) {
-          // Final pick
-          const finalName = names[Math.floor(Math.random() * names.length)];
-          setDisplayName(finalName);
-          setStopped(true);
-          onStop?.(finalName);
-          return;
-        }
+    const tick = () => {
+      if (cancelled) return;
 
-        // Slow down progressively
-        if (elapsed > spinDuration * 0.6) {
-          speed = Math.min(speed + 30, 300);
-        } else if (elapsed > spinDuration * 0.3) {
-          speed = Math.min(speed + 10, 150);
-        }
+      const randomName = names[Math.floor(Math.random() * names.length)];
+      setDisplayName(randomName);
+      elapsed += speed;
 
-        timeoutRef.current = setTimeout(tick, speed);
-      };
+      if (elapsed > spinDuration) {
+        const finalName = names[Math.floor(Math.random() * names.length)];
+        setDisplayName(finalName);
+        setStopped(true);
+        onStopRef.current?.(finalName);
+        return;
+      }
 
-      tick();
+      if (elapsed > spinDuration * 0.6) {
+        speed = Math.min(speed + 30, 300);
+      } else if (elapsed > spinDuration * 0.3) {
+        speed = Math.min(speed + 10, 150);
+      }
 
-      return () => {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      };
-    }
-  }, [spinning, names, spinDuration, onStop]);
+      timeoutRef.current = setTimeout(tick, speed);
+    };
+
+    tick();
+
+    return () => {
+      cancelled = true;
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [spinning, names, spinDuration]);
 
   useEffect(() => {
     if (revealed) {
@@ -61,7 +65,6 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
       setStopped(true);
     }
   }, [revealed]);
-
   return (
     <div className={`flex flex-col items-center gap-2 ${inactive ? 'opacity-30' : ''}`}>
       <span className="text-xs font-arcade uppercase tracking-widest text-primary text-glow-orange">

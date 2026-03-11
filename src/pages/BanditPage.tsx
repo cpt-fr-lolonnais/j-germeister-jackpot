@@ -284,20 +284,20 @@ export default function BanditPage({
           )}
 
           {/* Result display */}
-          {phase === 'result' && (
+          {phase === 'result' && lastRound && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               className="mt-6 space-y-4"
             >
-              {lastRound?.jaegerConsumed === 1 ? (
+              {lastRound.jaegerConsumed === 1 ? (
                 <p className="font-orbitron text-lg text-foreground">
-                  {isDreifach ? '🎰' : '🦌'} <span className="text-primary font-bold">{lastRound.loser}</span> TRINKT ALLEINE! 🥃
+                  {isDreifach ? '🎰' : '⚡'} <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! 🥃
                 </p>
               ) : (
                 <p className="font-orbitron text-lg text-foreground">
-                  🦌 <span className="text-primary font-bold">{lastRound?.master}</span> + <span className="text-primary font-bold">
-                    {lastRound?.loser}
+                  🦌 <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
+                    {lastRound.loser}
                   </span> trinken! 🥃
                 </p>
               )}
