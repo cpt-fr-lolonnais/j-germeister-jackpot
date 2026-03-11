@@ -26,8 +26,8 @@ export default function BottomNav() {
               >
       <div className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all ${
                   active 
-                    ? 'bg-primary border-primary box-glow-orange' 
-                    : 'bg-muted border-border'
+                    ? 'bg-background border-primary border-2 box-glow-orange' 
+                    : 'bg-muted border-border border-2'
                 }`}>
                   <img src={active ? '/icon-nav-active.png' : '/icon-nav-inactive.png'} className="w-8 h-8" alt="Hirschjagd" />
                 </div>
