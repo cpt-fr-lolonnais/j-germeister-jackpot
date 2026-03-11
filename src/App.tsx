@@ -27,7 +27,8 @@ const AppContent = () => {
               revealMaster={gs.revealMaster}
               startDeerSpin={gs.startDeerSpin}
               revealDeers={gs.revealDeers}
-              resolveChallenge={gs.resolveChallenge}
+              resolveChallengeNormal={gs.resolveChallengeNormal}
+              resolveChallengeDoppel={gs.resolveChallengeDoppel}
               resetRound={gs.resetRound}
               pickRandom={gs.pickRandom}
             />
