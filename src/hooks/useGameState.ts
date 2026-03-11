@@ -53,6 +53,16 @@ export function useGameState() {
     totalJaeger: 40, jaegerRemaining: 40, playerStats: {}, rounds: []
   }));
 
+  // Migration: Reset corrupted stats from previous version
+  useEffect(() => {
+    const version = localStorage.getItem('hj_version');
+    if (version !== '2') {
+      localStorage.removeItem('hj_stats');
+      localStorage.setItem('hj_version', '2');
+      setStatsState({ totalJaeger: 40, jaegerRemaining: 40, playerStats: {}, rounds: [] });
+    }
+  }, []);
+
   const setPlayers = useCallback((p: Player[] | ((prev: Player[]) => Player[])) => {
     setPlayersState(prev => {
       const next = typeof p === 'function' ? p(prev) : p;
