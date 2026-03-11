@@ -15,6 +15,17 @@ export default function StatsPage({ stats, resetAll }: Props) {
     .filter(p => p.drinks > 0)
     .sort((a, b) => b.drinks - a.drinks || a.name.localeCompare(b.name));
 
+  let currentRank = 1;
+  const leaderboardWithRank = leaderboard.map((p, i) => {
+    if (i > 0 && p.drinks < leaderboard[i - 1].drinks) {
+      currentRank = i + 1;
+    }
+    return { ...p, rank: currentRank };
+  });
+
+  const lastRank = leaderboardWithRank[leaderboardWithRank.length - 1]?.rank ?? 1;
+  const firstRank = leaderboardWithRank[0]?.rank ?? 1;
+
   return (
     <div className="p-4 pb-24 max-w-md mx-auto">
       <h1 className="font-fraktur text-4xl text-center text-primary text-glow-orange mb-6">Statistik</h1>
@@ -44,11 +55,11 @@ export default function StatsPage({ stats, resetAll }: Props) {
         <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
           🥃 Trink-Rangliste
         </h2>
-        {leaderboard.length === 0 ? (
+        {leaderboardWithRank.length === 0 ? (
           <p className="text-center text-muted-foreground text-xs font-orbitron">Noch keine Runden gespielt.</p>
         ) : (
           <div className="space-y-2">
-            {leaderboard.map((p, i) => (
+            {leaderboardWithRank.map((p, i) => (
               <motion.div
                 key={p.name}
                 initial={{ opacity: 0, x: -10 }}
@@ -57,7 +68,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 className="flex items-center gap-3 p-3 rounded-lg bg-card neon-border"
               >
                 <span className="font-arcade text-xs w-6 text-center text-muted-foreground">
-                  {i === 0 ? '👑' : i === leaderboard.length - 1 && leaderboard.length > 1 ? '🐢' : `${i + 1}.`}
+                  {p.rank === 1 ? '👑' : (p.rank === lastRank && lastRank !== firstRank) ? '🐢' : `${p.rank}.`}
                 </span>
                 <span className="flex-1 font-orbitron font-bold text-sm text-foreground">{p.name}</span>
                 <span className="font-orbitron font-bold text-primary text-glow-orange">{p.drinks}</span>
