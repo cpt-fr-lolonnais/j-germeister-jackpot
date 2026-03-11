@@ -127,7 +127,7 @@ export default function BanditPage({
   const isGameOver = stats.jaegerRemaining <= 0;
 
   // Get last round info for result display
-  const lastRound = stats.rounds[stats.rounds.length - 1];
+  const lastRound = localResult || stats.rounds[stats.rounds.length - 1];
 
   return (
     <div className="p-4 pb-24 max-w-md mx-auto text-center relative overflow-hidden">
