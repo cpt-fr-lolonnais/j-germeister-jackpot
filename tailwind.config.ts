@@ -108,6 +108,10 @@ export default {
           "0%, 100%": { textShadow: "0 0 10px hsl(30 85% 50%), 0 0 20px hsl(30 85% 50%), 0 0 40px hsl(30 100% 55%)" },
           "50%": { textShadow: "0 0 5px hsl(30 85% 50%), 0 0 10px hsl(30 85% 50%)" },
         },
+        "button-glow": {
+          "0%, 100%": { boxShadow: "0 0 10px hsl(30 85% 50% / 0.5), 0 0 20px hsl(30 85% 50% / 0.3)" },
+          "50%": { boxShadow: "0 0 20px hsl(30 85% 50% / 0.8), 0 0 40px hsl(30 85% 50% / 0.5)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
