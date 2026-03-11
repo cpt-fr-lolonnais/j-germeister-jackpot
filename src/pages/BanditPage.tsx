@@ -148,7 +148,7 @@ export default function BanditPage({
                 {master}
               </div>
               <div className="font-orbitron text-lg text-foreground mt-2">
-                TRINKT ALLEINE! <JaegerBottle />
+                 TRINKT ALLEINE!
               </div>
             </div>
           </motion.div>
