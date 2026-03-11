@@ -14,7 +14,7 @@ interface Props {
   startDeerSpin: () => void;
   revealDeers: (d1: string, d2: string) => void;
   resolveChallengeNormal: (loser: string) => void;
-  resolveChallengeDoppel: (winner: string) => void;
+  resolveChallengeDoppel: (loser: string) => void;
   resetRound: () => void;
   pickRandom: () => string;
 }
@@ -29,6 +29,7 @@ export default function BanditPage({
 
   const [showSpecial, setShowSpecial] = useState<'doppel' | 'jackpot' | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [localResult, setLocalResult] = useState<{ master: string; loser: string; jaegerConsumed: number } | null>(null);
 
   // Handle master reel stop
   const handleMasterStop = useCallback((name: string) => {
@@ -61,9 +62,25 @@ export default function BanditPage({
     }
   }, [deer1Stopped, deer2Stopped, phase, revealDeers]);
 
+  // Resolve wrappers that set localResult
+  const handleResolveChallengeNormal = (loser: string) => {
+    setLocalResult({ master: master!, loser, jaegerConsumed: 2 });
+    resolveChallengeNormal(loser);
+  };
+
+  const handleResolveChallengeDoppel = (loser: string) => {
+    if (loser === master) {
+      setLocalResult({ master: master!, loser: master!, jaegerConsumed: 1 });
+    } else {
+      setLocalResult({ master: master!, loser, jaegerConsumed: 2 });
+    }
+    resolveChallengeDoppel(loser);
+  };
+
   // Special effects
   useEffect(() => {
     if (isDreifach && phase === 'result') {
+      setLocalResult({ master: master!, loser: master!, jaegerConsumed: 1 });
       setShowSpecial('jackpot');
       const duration = 3000;
       const end = Date.now() + duration;
@@ -110,7 +127,7 @@ export default function BanditPage({
   const isGameOver = stats.jaegerRemaining <= 0;
 
   // Get last round info for result display
-  const lastRound = stats.rounds[stats.rounds.length - 1];
+  const lastRound = localResult || stats.rounds[stats.rounds.length - 1];
 
   return (
     <div className="p-4 pb-24 max-w-md mx-auto text-center relative overflow-hidden">
@@ -257,7 +274,7 @@ export default function BanditPage({
                       <motion.button
                         key={name}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => resolveChallengeDoppel(name)}
+                        onClick={() => handleResolveChallengeDoppel(name)}
                         className="flex-1 py-3 rounded-lg font-orbitron font-bold text-sm bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
                       >
                         {name}
@@ -277,7 +294,7 @@ export default function BanditPage({
                       <motion.button
                         key={name}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => resolveChallengeNormal(name)}
+                        onClick={() => handleResolveChallengeNormal(name)}
                         className="flex-1 py-3 rounded-lg font-orbitron font-bold text-sm bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
                       >
                         {name}
@@ -309,7 +326,7 @@ export default function BanditPage({
               )}
               <motion.button
                 whileTap={{ scale: 0.95 }}
-                onClick={resetRound}
+                onClick={() => { setLocalResult(null); resetRound(); }}
                 className="w-full py-3 rounded-xl font-arcade text-xs bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
               >
                 NÄCHSTE RUNDE →
