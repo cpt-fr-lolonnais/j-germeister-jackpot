@@ -120,6 +120,7 @@ export default {
         flash: "flash 0.5s ease-in-out infinite",
         "mega-shake": "mega-shake 0.5s ease-in-out",
         "neon-pulse": "neon-pulse 2s ease-in-out infinite",
+        "button-glow": "button-glow 2s ease-in-out infinite",
       },
     },
   },
