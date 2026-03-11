@@ -2,8 +2,6 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import SlotReel from '@/components/SlotReel';
-import ShotGlass from '@/components/icons/ShotGlass';
-import Antlers from '@/components/icons/Antlers';
 import { GameState, Stats, Player } from '@/hooks/useGameState';
 
 interface Props {
@@ -31,6 +29,7 @@ export default function BanditPage({
   const [showSpecial, setShowSpecial] = useState<'doppel' | 'jackpot' | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
 
+  // Handle master reel stop
   const handleMasterStop = useCallback((name: string) => {
     setTimeout(() => {
       revealMaster(name);
@@ -38,6 +37,7 @@ export default function BanditPage({
     }, 300);
   }, [revealMaster]);
 
+  // Handle deer reels stop
   const [deer1Stopped, setDeer1Stopped] = useState<string | null>(null);
   const [deer2Stopped, setDeer2Stopped] = useState<string | null>(null);
 
@@ -60,6 +60,7 @@ export default function BanditPage({
     }
   }, [deer1Stopped, deer2Stopped, phase, revealDeers]);
 
+  // Special effects
   useEffect(() => {
     if (isDreifach && phase === 'result') {
       setShowSpecial('jackpot');
@@ -93,21 +94,18 @@ export default function BanditPage({
 
   const getButtonLabel = () => {
     switch (phase) {
-      case 'idle': return 'SPIN!';
-      case 'master_spinning': return 'DREHT...';
-      case 'master_revealed': return 'HIRSCHE JAGEN!';
-      case 'deer_spinning': return 'DREHT...';
+      case 'idle': return '🎰 SPIN!';
+      case 'master_spinning': return '⏳ DREHT...';
+      case 'master_revealed': return '🦌 HIRSCHE JAGEN!';
+      case 'deer_spinning': return '⏳ DREHT...';
       default: return '';
     }
   };
 
   const isGameOver = stats.jaegerRemaining <= 0;
-  const lastRound = stats.rounds[stats.rounds.length - 1];
 
-  const percent = (stats.jaegerRemaining / stats.totalJaeger) * 100;
-  const barColor = percent > 50 ? 'from-green-500 to-green-600'
-    : percent > 25 ? 'from-orange-500 to-yellow-500'
-    : 'from-red-600 to-red-500';
+  // Get last round info for result display
+  const lastRound = stats.rounds[stats.rounds.length - 1];
 
   return (
     <div className="p-4 pb-24 max-w-md mx-auto text-center relative overflow-hidden">
@@ -122,13 +120,13 @@ export default function BanditPage({
           >
             <div className="text-center">
               <div className="font-arcade text-2xl text-jaeger-gold text-glow-gold animate-flash mb-4">
-                JACKPOT!!!
+                🎰 JACKPOT!!! 🎰
               </div>
               <div className="font-fraktur text-4xl text-primary text-glow-orange">
                 {master}
               </div>
-              <div className="font-orbitron text-lg text-foreground mt-2 flex items-center justify-center gap-2">
-                TRINKT ALLEINE! <ShotGlass className="w-5 h-5" />
+              <div className="font-orbitron text-lg text-foreground mt-2">
+                TRINKT ALLEINE! 🥃
               </div>
             </div>
           </motion.div>
@@ -141,7 +139,7 @@ export default function BanditPage({
             className="fixed inset-0 z-50 flex items-center justify-center bg-background/80"
           >
             <div className="font-arcade text-xl text-jaeger-gold text-glow-gold animate-glitch">
-              DOPPELGÄNGER
+              ⚡ DOPPELGÄNGER ⚡
             </div>
           </motion.div>
         )}
@@ -150,9 +148,6 @@ export default function BanditPage({
       {/* Header */}
       <div className="mb-4">
         <h1 className="font-fraktur text-5xl text-primary text-glow-orange leading-tight">Hirschjagd</h1>
-        <p className="font-arcade text-[10px] text-primary text-glow-orange mt-1 tracking-widest">
-          WHEEL OF TORTURE
-        </p>
         <p className="font-arcade text-[8px] text-foreground animate-neon-pulse mt-1 tracking-widest">
           40 SHOTS TO GLORY
         </p>
@@ -160,14 +155,14 @@ export default function BanditPage({
 
       {/* Jäger Counter */}
       <div className="neon-border rounded-lg p-3 mb-6 bg-card/50">
-        <span className="font-orbitron font-bold text-lg flex items-center justify-center gap-2">
-          <Antlers className="w-5 h-5" /> {stats.jaegerRemaining}/{stats.totalJaeger} JÄGER ÜBRIG
+        <span className="font-orbitron font-bold text-lg">
+          🦌 {stats.jaegerRemaining}/{stats.totalJaeger} JÄGER ÜBRIG
         </span>
         <div className="w-full h-2 bg-muted rounded-full mt-2 overflow-hidden">
           <motion.div
-            className={`h-full rounded-full bg-gradient-to-r ${barColor} ${percent <= 25 ? 'animate-pulse' : ''}`}
+            className="h-full bg-primary rounded-full"
             initial={false}
-            animate={{ width: `${percent}%` }}
+            animate={{ width: `${(stats.jaegerRemaining / stats.totalJaeger) * 100}%` }}
             transition={{ duration: 0.5 }}
           />
         </div>
@@ -180,7 +175,7 @@ export default function BanditPage({
           className="py-12"
         >
           <div className="font-arcade text-xl text-jaeger-gold text-glow-gold mb-4">
-            ALLE JÄGER VERNICHTET!
+            🏁 ALLE JÄGER VERNICHTET! 🏁
           </div>
           <div className="font-fraktur text-3xl text-primary text-glow-orange">
             Das Massaker ist vorbei!
@@ -188,36 +183,34 @@ export default function BanditPage({
         </motion.div>
       ) : (
         <>
-          {/* Slot Machine Frame */}
-          <div className="rounded-xl p-3 mb-6 slot-machine-frame">
-            <div className="flex justify-center gap-3">
-              <SlotReel
-                names={names}
-                spinning={phase === 'master_spinning'}
-                onStop={handleMasterStop}
-                label="MEISTER"
-                revealed={master}
-                spinDuration={2500}
-              />
-              <SlotReel
-                names={names}
-                spinning={phase === 'deer_spinning'}
-                onStop={handleDeer1Stop}
-                label="HIRSCH"
-                revealed={deer1}
-                inactive={phase === 'idle' || phase === 'master_spinning' || phase === 'master_revealed'}
-                spinDuration={2800}
-              />
-              <SlotReel
-                names={names}
-                spinning={phase === 'deer_spinning'}
-                onStop={handleDeer2Stop}
-                label="HIRSCH"
-                revealed={deer2}
-                inactive={phase === 'idle' || phase === 'master_spinning' || phase === 'master_revealed'}
-                spinDuration={3200}
-              />
-            </div>
+          {/* Slot Machine */}
+          <div className="flex justify-center gap-3 mb-6">
+            <SlotReel
+              names={names}
+              spinning={phase === 'master_spinning'}
+              onStop={handleMasterStop}
+              label="MEISTER"
+              revealed={master}
+              spinDuration={2500}
+            />
+            <SlotReel
+              names={names}
+              spinning={phase === 'deer_spinning'}
+              onStop={handleDeer1Stop}
+              label="HIRSCH"
+              revealed={deer1}
+              inactive={phase === 'idle' || phase === 'master_spinning' || phase === 'master_revealed'}
+              spinDuration={2800}
+            />
+            <SlotReel
+              names={names}
+              spinning={phase === 'deer_spinning'}
+              onStop={handleDeer2Stop}
+              label="HIRSCH"
+              revealed={deer2}
+              inactive={phase === 'idle' || phase === 'master_spinning' || phase === 'master_revealed'}
+              spinDuration={3200}
+            />
           </div>
 
           {/* Spin Button */}
@@ -227,14 +220,14 @@ export default function BanditPage({
               whileTap={{ scale: 0.95 }}
               onClick={handleSpin}
               disabled={!canSpin || isSpinning}
-              className="w-full py-5 rounded-xl font-arcade text-sm bg-primary text-primary-foreground animate-button-glow disabled:opacity-40 disabled:cursor-not-allowed disabled:animate-none transition-all"
+              className="w-full py-4 rounded-xl font-arcade text-sm bg-primary text-primary-foreground box-glow-orange disabled:opacity-40 disabled:cursor-not-allowed transition-all"
             >
               {getButtonLabel()}
             </motion.button>
           )}
 
           {phase === 'master_spinning' || phase === 'deer_spinning' ? (
-            <div className="py-5 font-arcade text-xs text-muted-foreground animate-pulse">
+            <div className="py-4 font-arcade text-xs text-muted-foreground animate-pulse">
               {getButtonLabel()}
             </div>
           ) : null}
@@ -298,22 +291,20 @@ export default function BanditPage({
               className="mt-6 space-y-4"
             >
               {lastRound.jaegerConsumed === 1 ? (
-                <p className="font-orbitron text-lg text-foreground flex items-center justify-center gap-2">
-                  {isDreifach ? <span className="text-jaeger-gold font-arcade text-sm">JACKPOT</span> : <span className="text-jaeger-gold">⚡</span>}
-                  <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! <ShotGlass className="w-5 h-5" />
+                <p className="font-orbitron text-lg text-foreground">
+                  {isDreifach ? '🎰' : '⚡'} <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! 🥃
                 </p>
               ) : (
-                <p className="font-orbitron text-lg text-foreground flex items-center justify-center gap-2">
-                  <Antlers className="w-5 h-5" />
-                  <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
+                <p className="font-orbitron text-lg text-foreground">
+                  🦌 <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
                     {lastRound.loser}
-                  </span> trinken! <ShotGlass className="w-5 h-5" />
+                  </span> trinken! 🥃
                 </p>
               )}
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={resetRound}
-                className="w-full py-4 rounded-xl font-arcade text-xs bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground animate-button-glow transition-all"
+                className="w-full py-3 rounded-xl font-arcade text-xs bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
               >
                 NÄCHSTE RUNDE →
               </motion.button>

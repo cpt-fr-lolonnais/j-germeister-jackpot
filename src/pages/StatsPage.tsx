@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Stats } from '@/hooks/useGameState';
-import ShotGlass from '@/components/icons/ShotGlass';
-import Antlers from '@/components/icons/Antlers';
+import { Trophy, Turtle } from 'lucide-react';
 
 interface Props {
   stats: Stats;
@@ -27,11 +26,6 @@ export default function StatsPage({ stats, resetAll }: Props) {
   const lastRank = leaderboardWithRank[leaderboardWithRank.length - 1]?.rank ?? 1;
   const firstRank = leaderboardWithRank[0]?.rank ?? 1;
 
-  const percent = (jaegerRemaining / totalJaeger) * 100;
-  const barColor = percent > 50 ? 'from-green-500 to-green-600'
-    : percent > 25 ? 'from-orange-500 to-yellow-500'
-    : 'from-red-600 to-red-500';
-
   return (
     <div className="p-4 pb-24 max-w-md mx-auto">
       <h1 className="font-fraktur text-4xl text-center text-primary text-glow-orange mb-6">Statistik</h1>
@@ -44,22 +38,22 @@ export default function StatsPage({ stats, resetAll }: Props) {
         <p className="text-xs font-orbitron text-muted-foreground mt-1">Jägermeister übrig</p>
         <div className="w-full h-3 bg-muted rounded-full mt-3 overflow-hidden">
           <motion.div
-            className={`h-full rounded-full bg-gradient-to-r ${barColor} ${percent <= 25 ? 'animate-pulse' : ''}`}
-            animate={{ width: `${percent}%` }}
+            className="h-full bg-primary rounded-full"
+            animate={{ width: `${(jaegerRemaining / totalJaeger) * 100}%` }}
             transition={{ duration: 0.5 }}
           />
         </div>
         {jaegerRemaining <= 0 && (
           <p className="font-arcade text-xs text-jaeger-gold text-glow-gold mt-3">
-            ALLE JÄGER VERNICHTET!
+            🏁 ALLE JÄGER VERNICHTET! 🏁
           </p>
         )}
       </div>
 
       {/* Leaderboard */}
       <div className="mb-6">
-        <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3 flex items-center gap-2">
-          <ShotGlass className="w-3 h-3" /> Trink-Rangliste
+        <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
+          🥃 Trink-Rangliste
         </h2>
         {leaderboardWithRank.length === 0 ? (
           <p className="text-center text-muted-foreground text-xs font-orbitron">Noch keine Runden gespielt.</p>
@@ -78,7 +72,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 </span>
                 <span className="flex-1 font-orbitron font-bold text-sm text-foreground">{p.name}</span>
                 <span className="font-orbitron font-bold text-primary text-glow-orange">{p.drinks}</span>
-                <ShotGlass className="w-4 h-4 text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">🥃</span>
               </motion.div>
             ))}
           </div>
@@ -89,7 +83,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
       {rounds.length > 0 && (
         <div className="mb-6">
           <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
-            Rundenverlauf
+            📜 Rundenverlauf
           </h2>
           <div className="space-y-1 max-h-60 overflow-y-auto">
             {[...rounds].reverse().map((r) => (
@@ -100,7 +94,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 ) : (
                   <>Meister {r.master} → {r.deer1} vs {r.deer2} · Verlierer: {r.loser}</>
                 )}
-                {' '}({r.jaegerConsumed} Shots)
+                {' '}({r.jaegerConsumed}🥃)
               </div>
             ))}
           </div>
@@ -116,7 +110,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
         }}
         className="w-full py-3 rounded-lg font-arcade text-[10px] bg-destructive text-destructive-foreground hover:opacity-90 transition"
       >
-        ALLES ZURÜCKSETZEN
+        🗑️ ALLES ZURÜCKSETZEN
       </button>
     </div>
   );

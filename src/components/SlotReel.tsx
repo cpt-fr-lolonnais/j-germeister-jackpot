@@ -67,37 +67,26 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
       setStopped(true);
     }
   }, [revealed]);
-
   return (
     <div className={`flex flex-col items-center gap-2 ${inactive ? 'opacity-30' : ''}`}>
-      <span className="text-[9px] font-arcade uppercase tracking-widest text-primary text-glow-orange">
+      <span className="text-xs font-arcade uppercase tracking-widest text-primary text-glow-orange">
         {label}
       </span>
-      <div className="slot-reel w-28 h-36 sm:w-32 sm:h-40 rounded-lg flex items-center justify-center overflow-hidden relative">
-        {/* Top fade overlay */}
-        <div className="absolute top-0 left-0 right-0 h-10 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, hsl(160 38% 8%), transparent)' }}
-        />
-
+      <div className="slot-reel w-24 h-28 sm:w-28 sm:h-32 rounded-lg flex items-center justify-center overflow-hidden relative">
         {inactive ? (
-          <span className="text-muted-foreground text-3xl font-orbitron">?</span>
+          <span className="text-muted-foreground text-2xl">?</span>
         ) : (
           <motion.div
             key={displayName}
             initial={spinning && !stopped ? { y: -20, opacity: 0 } : {}}
             animate={{ y: 0, opacity: 1 }}
-            className={`text-center px-2 font-orbitron font-bold text-base sm:text-lg ${
+            className={`text-center px-2 font-orbitron font-bold text-sm sm:text-base ${
               stopped ? 'text-primary text-glow-orange' : 'text-foreground'
             }`}
           >
             {displayName || '—'}
           </motion.div>
         )}
-
-        {/* Bottom fade overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-10 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to top, hsl(160 38% 8%), transparent)' }}
-        />
 
         {/* Scanlines overlay */}
         <div className="absolute inset-0 pointer-events-none opacity-10"
