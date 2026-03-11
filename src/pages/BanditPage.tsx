@@ -155,11 +155,12 @@ export default function BanditPage({
       </div>
 
       {/* Jäger Counter */}
-      <div className="neon-border rounded-lg p-3 mb-6 bg-card/50">
-        <span className="font-orbitron font-bold text-lg">
-          🦌 {stats.jaegerRemaining}/{stats.totalJaeger} JÄGER ÜBRIG
-        </span>
-        <div className="w-full h-2 bg-muted rounded-full mt-2 overflow-hidden">
+      <div className="neon-border rounded-lg p-4 mb-6 bg-card/50 text-center">
+        <div className="font-orbitron font-bold text-3xl text-foreground">
+          {stats.jaegerRemaining} <span className="text-muted-foreground text-lg">von {stats.totalJaeger}</span>
+        </div>
+        <p className="text-xs font-orbitron text-muted-foreground mt-1">Jägermeister übrig</p>
+        <div className="w-full h-3 bg-muted rounded-full mt-3 overflow-hidden">
           <motion.div
             className="h-full bg-primary rounded-full"
             initial={false}
