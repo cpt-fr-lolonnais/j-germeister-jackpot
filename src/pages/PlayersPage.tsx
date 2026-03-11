@@ -28,7 +28,7 @@ export default function PlayersPage({ players, addPlayer, removePlayer, togglePl
   };
 
   return (
-    <div className="p-4 pb-24 max-w-md mx-auto">
+    <div className="p-4 pt-8 pb-24 max-w-md mx-auto">
       <div className="flex items-center justify-between mb-2">
         <div className="w-10" />
         <h1 className="font-fraktur text-4xl text-center text-primary text-glow-orange">Spieler</h1>
