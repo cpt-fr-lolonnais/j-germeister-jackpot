@@ -191,7 +191,7 @@ export default function BanditPage({
               names={names}
               spinning={phase === 'master_spinning'}
               onStop={handleMasterStop}
-              label="MEISTER"
+              label="JÄGER"
               revealed={master}
               spinDuration={2500}
             />
