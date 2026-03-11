@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import SlotReel from '@/components/SlotReel';
-import JaegerBottle from '@/components/JaegerBottle';
+
 import { GameState, Stats, Player } from '@/hooks/useGameState';
 
 interface Props {
@@ -116,7 +116,7 @@ export default function BanditPage({
 
   const getButtonLabel = () => {
     switch (phase) {
-      case 'idle': return 'WAIDMANNSHEIL!';
+      case 'idle': return 'WEIDMANNSHEIL!';
       case 'master_spinning': return 'LADEN...';
       case 'master_revealed': return 'HIRSCHE JAGEN!';
       case 'deer_spinning': return 'LADEN...';
@@ -148,7 +148,7 @@ export default function BanditPage({
                 {master}
               </div>
               <div className="font-orbitron text-lg text-foreground mt-2">
-                TRINKT ALLEINE! <JaegerBottle />
+                 TRINKT ALLEINE!
               </div>
             </div>
           </motion.div>
@@ -315,13 +315,13 @@ export default function BanditPage({
             >
               {lastRound.jaegerConsumed === 1 ? (
                 <p className="font-orbitron text-lg text-foreground">
-                  <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! <JaegerBottle />
+                  <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE!
                 </p>
               ) : (
                 <p className="font-orbitron text-lg text-foreground">
                   <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
                     {lastRound.loser}
-                  </span> trinken! <JaegerBottle />
+                  </span> trinken!
                 </p>
               )}
               <motion.button
@@ -329,7 +329,7 @@ export default function BanditPage({
                 onClick={() => { setLocalResult(null); resetRound(); }}
                 className="w-full py-3 rounded-xl font-arcade text-xs bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
               >
-                NÄCHSTE RUNDE →
+                NÄCHSTE RUNDE
               </motion.button>
             </motion.div>
           )}
