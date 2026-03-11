@@ -1,9 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Users, BarChart3, Crosshair } from 'lucide-react';
+import { Users, BarChart3 } from 'lucide-react';
 
 const tabs = [
   { path: '/players', label: 'Spieler', icon: Users, isMain: false },
-  { path: '/', label: 'Hirschjagd', icon: Crosshair, isMain: true },
+  { path: '/', label: 'Hirschjagd', icon: null, isMain: true },
   { path: '/stats', label: 'Statistik', icon: BarChart3, isMain: false },
 ];
 
@@ -29,7 +29,7 @@ export default function BottomNav() {
                     ? 'bg-primary border-primary box-glow-orange' 
                     : 'bg-muted border-border'
                 }`}>
-                  <tab.icon className={`w-7 h-7 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+                  <img src={active ? '/icon-nav-active.png' : '/icon-nav-inactive.png'} className="w-8 h-8" alt="Hirschjagd" />
                 </div>
                 <span className={`text-[9px] font-orbitron font-bold uppercase tracking-wider mt-1 ${
                   active ? 'text-primary text-glow-orange' : 'text-muted-foreground'
