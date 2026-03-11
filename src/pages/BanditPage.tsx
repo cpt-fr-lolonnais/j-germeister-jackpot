@@ -95,10 +95,10 @@ export default function BanditPage({
 
   const getButtonLabel = () => {
     switch (phase) {
-      case 'idle': return 'SPIN!';
-      case 'master_spinning': return 'DREHT...';
+      case 'idle': return 'SHOOT!';
+      case 'master_spinning': return 'LADEN...';
       case 'master_revealed': return 'HIRSCHE JAGEN!';
-      case 'deer_spinning': return 'DREHT...';
+      case 'deer_spinning': return 'LADEN...';
       default: return '';
     }
   };
