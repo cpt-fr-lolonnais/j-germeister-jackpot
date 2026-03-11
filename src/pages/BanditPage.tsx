@@ -12,25 +12,29 @@ interface Props {
   revealMaster: (name: string) => void;
   startDeerSpin: () => void;
   revealDeers: (d1: string, d2: string) => void;
-  resolveChallenge: (loser: string) => void;
+  resolveChallengeNormal: (loser: string) => void;
+  resolveChallengeDoppel: (winner: string) => void;
   resetRound: () => void;
   pickRandom: () => string;
 }
 
 export default function BanditPage({
   activePlayers, gameState, stats, startSpin, revealMaster,
-  startDeerSpin, revealDeers, resolveChallenge, resetRound, pickRandom
+  startDeerSpin, revealDeers, resolveChallengeNormal, resolveChallengeDoppel, resetRound, pickRandom
 }: Props) {
   const { phase, master, deer1, deer2, isDoppel, isDreifach } = gameState;
   const names = activePlayers.map(p => p.name);
   const canSpin = activePlayers.length >= 3 && stats.jaegerRemaining > 0;
 
-  const [resultMessage, setResultMessage] = useState('');
   const [showSpecial, setShowSpecial] = useState<'doppel' | 'jackpot' | null>(null);
+  const [isSpinning, setIsSpinning] = useState(false);
 
   // Handle master reel stop
   const handleMasterStop = useCallback((name: string) => {
-    setTimeout(() => revealMaster(name), 300);
+    setTimeout(() => {
+      revealMaster(name);
+      setIsSpinning(false);
+    }, 300);
   }, [revealMaster]);
 
   // Handle deer reels stop
@@ -51,6 +55,7 @@ export default function BanditPage({
         revealDeers(deer1Stopped, deer2Stopped);
         setDeer1Stopped(null);
         setDeer2Stopped(null);
+        setIsSpinning(false);
       }, 500);
     }
   }, [deer1Stopped, deer2Stopped, phase, revealDeers]);
@@ -59,7 +64,6 @@ export default function BanditPage({
   useEffect(() => {
     if (isDreifach && phase === 'result') {
       setShowSpecial('jackpot');
-      // MEGA confetti
       const duration = 3000;
       const end = Date.now() + duration;
       const frame = () => {
@@ -77,6 +81,8 @@ export default function BanditPage({
   }, [isDreifach, isDoppel, phase]);
 
   const handleSpin = () => {
+    if (isSpinning) return;
+    setIsSpinning(true);
     if (phase === 'idle') {
       startSpin();
     } else if (phase === 'master_revealed') {
@@ -96,11 +102,10 @@ export default function BanditPage({
     }
   };
 
-  const handleResolve = (name: string) => {
-    resolveChallenge(name);
-  };
-
   const isGameOver = stats.jaegerRemaining <= 0;
+
+  // Get last round info for result display
+  const lastRound = stats.rounds[stats.rounds.length - 1];
 
   return (
     <div className="p-4 pb-24 max-w-md mx-auto text-center relative overflow-hidden">
@@ -111,8 +116,7 @@ export default function BanditPage({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/80"
-            style={{ animation: 'mega-shake 0.5s ease-in-out infinite' }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 animate-mega-shake"
           >
             <div className="text-center">
               <div className="font-arcade text-2xl text-jaeger-gold text-glow-gold animate-flash mb-4">
@@ -215,7 +219,7 @@ export default function BanditPage({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleSpin}
-              disabled={!canSpin}
+              disabled={!canSpin || isSpinning}
               className="w-full py-4 rounded-xl font-arcade text-sm bg-primary text-primary-foreground box-glow-orange disabled:opacity-40 disabled:cursor-not-allowed transition-all"
             >
               {getButtonLabel()}
@@ -247,11 +251,7 @@ export default function BanditPage({
                       <motion.button
                         key={name}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => {
-                          // Winner selected → loser is the other one
-                          const loser = name === master ? (deer1 === master ? deer2! : deer1!) : master!;
-                          handleResolve(loser);
-                        }}
+                        onClick={() => resolveChallengeDoppel(name)}
                         className="flex-1 py-3 rounded-lg font-orbitron font-bold text-sm bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
                       >
                         {name}
@@ -271,7 +271,7 @@ export default function BanditPage({
                       <motion.button
                         key={name}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => handleResolve(name)}
+                        onClick={() => resolveChallengeNormal(name)}
                         className="flex-1 py-3 rounded-lg font-orbitron font-bold text-sm bg-secondary text-secondary-foreground neon-border hover:bg-primary hover:text-primary-foreground transition-all"
                       >
                         {name}
@@ -290,14 +290,14 @@ export default function BanditPage({
               animate={{ opacity: 1, scale: 1 }}
               className="mt-6 space-y-4"
             >
-              {isDreifach ? (
+              {lastRound?.jaegerConsumed === 1 ? (
                 <p className="font-orbitron text-lg text-foreground">
-                  🎰 <span className="text-primary font-bold">{master}</span> TRINKT ALLEINE! 🥃
+                  {isDreifach ? '🎰' : '🦌'} <span className="text-primary font-bold">{lastRound.loser}</span> TRINKT ALLEINE! 🥃
                 </p>
               ) : (
                 <p className="font-orbitron text-lg text-foreground">
-                  🦌 <span className="text-primary font-bold">{master}</span> + <span className="text-primary font-bold">
-                    {stats.rounds[stats.rounds.length - 1]?.loser}
+                  🦌 <span className="text-primary font-bold">{lastRound?.master}</span> + <span className="text-primary font-bold">
+                    {lastRound?.loser}
                   </span> trinken! 🥃
                 </p>
               )}

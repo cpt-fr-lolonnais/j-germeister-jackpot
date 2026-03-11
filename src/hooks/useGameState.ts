@@ -149,20 +149,20 @@ export function useGameState() {
     }
   }, [gameState.master, setStats]);
 
-  const resolveChallenge = useCallback((loser: string) => {
-    const { master, deer1, deer2, isDoppel } = gameState;
-    if (isDoppel) {
-      const otherDeer = deer1 === master ? deer2! : deer1!;
-      if (loser === master) {
-        // Master lost - drinks alone
-        recordDrink(master!, null, deer1!, deer2!, 1);
-      } else {
-        // Master won - both drink
-        recordDrink(master!, loser, deer1!, deer2!, 2);
-      }
+  const resolveChallengeNormal = useCallback((loser: string) => {
+    const { master, deer1, deer2 } = gameState;
+    recordDrink(master!, loser, deer1!, deer2!, 2);
+  }, [gameState, recordDrink]);
+
+  const resolveChallengeDoppel = useCallback((winner: string) => {
+    const { master, deer1, deer2 } = gameState;
+    const otherDeer = deer1 === master ? deer2! : deer1!;
+    if (winner === master) {
+      // Master won → both drink
+      recordDrink(master!, otherDeer, deer1!, deer2!, 2);
     } else {
-      // Normal: master + loser drink
-      recordDrink(master!, loser, deer1!, deer2!, 2);
+      // Master lost → master drinks alone
+      recordDrink(master!, null, deer1!, deer2!, 1);
     }
   }, [gameState, recordDrink]);
 
@@ -177,7 +177,7 @@ export function useGameState() {
 
   return {
     players, activePlayers, addPlayer, removePlayer, togglePlayer,
-    gameState, startSpin, revealMaster, startDeerSpin, revealDeers, resolveChallenge, resetRound,
+    gameState, startSpin, revealMaster, startDeerSpin, revealDeers, resolveChallengeNormal, resolveChallengeDoppel, resetRound,
     stats, resetAll, pickRandom
   };
 }
