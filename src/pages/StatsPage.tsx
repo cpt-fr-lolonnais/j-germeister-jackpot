@@ -69,7 +69,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 className="flex items-center gap-3 p-3 rounded-lg bg-card neon-border"
               >
                 <span className="font-arcade text-xs w-6 text-center text-muted-foreground">
-                  {p.rank === 1 ? '👑' : (p.rank === lastRank && lastRank !== firstRank) ? '🐢' : `${p.rank}.`}
+                  {`${p.rank}.`}
                 </span>
                 <span className="flex-1 font-orbitron font-bold text-sm text-foreground">{p.name}</span>
                 <span className="font-orbitron font-bold text-primary text-glow-orange">{p.drinks}</span>
