@@ -2,7 +2,6 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import SlotReel from '@/components/SlotReel';
-import ShotGlass from '@/components/ShotGlass';
 import { GameState, Stats, Player } from '@/hooks/useGameState';
 
 interface Props {
@@ -127,7 +126,7 @@ export default function BanditPage({
                 {master}
               </div>
               <div className="font-orbitron text-lg text-foreground mt-2">
-                TRINKT ALLEINE! <ShotGlass />
+                TRINKT ALLEINE! 🥃
               </div>
             </div>
           </motion.div>
@@ -293,13 +292,13 @@ export default function BanditPage({
             >
               {lastRound.jaegerConsumed === 1 ? (
                 <p className="font-orbitron text-lg text-foreground">
-                  {isDreifach ? '🎰' : '⚡'} <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! <ShotGlass />
+                  {isDreifach ? '🎰' : '⚡'} <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! 🥃
                 </p>
               ) : (
                 <p className="font-orbitron text-lg text-foreground">
                   🦌 <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
                     {lastRound.loser}
-                  </span> trinken! <ShotGlass />
+                  </span> trinken! 🥃
                 </p>
               )}
               <motion.button
