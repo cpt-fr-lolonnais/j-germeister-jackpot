@@ -90,19 +90,21 @@ export default function StatsPage({ stats, resetAll, deleteRound }: Props) {
           <div className="space-y-1">
             {[...rounds].reverse().map((r) => (
               <div key={r.round} className="text-xs font-orbitron text-muted-foreground p-2 rounded bg-card/50 border border-border flex items-start justify-between gap-2">
-                <div>
-                  <span className="text-primary">R{r.round}:</span>{' '}
-                  {r.jaegerConsumed === 1 ? (
-                    <>{r.loser || r.master} trinkt alleine</>
-                  ) : r.deer1 === r.deer2 ? (
-                    <>{r.master} und {r.loser} trinken</>
-                  ) : (
-                    <>{r.master} und {r.loser} trinken · {r.deer1 === r.loser ? r.deer2 : r.deer1 === r.master ? r.deer2 : r.deer1} entkommt</>
-                  )}
+                <div className="min-w-0">
+                  <div>
+                    <span className="text-primary">R{r.round}:</span>{' '}
+                    {r.jaegerConsumed === 1 ? (
+                      <>{r.loser || r.master} trinkt alleine</>
+                    ) : r.deer1 === r.deer2 ? (
+                      <>{r.master} + {r.loser} trinken</>
+                    ) : (
+                      <>{r.master} + {r.loser} trinken · {r.deer1 === r.loser ? r.deer2 : r.deer1 === r.master ? r.deer2 : r.deer1} entkommt</>
+                    )}
+                  </div>
                   {r.timestamp && (
-                    <span className="text-muted-foreground/50 text-[10px] ml-2">
+                    <div className="text-muted-foreground/30 text-[9px] mt-0.5">
                       {new Date(r.timestamp).toLocaleString('de-CH', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
-                    </span>
+                    </div>
                   )}
                 </div>
                 <button
