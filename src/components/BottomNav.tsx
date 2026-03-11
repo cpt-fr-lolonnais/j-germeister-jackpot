@@ -29,7 +29,7 @@ export default function BottomNav() {
                     ? 'bg-primary border-primary box-glow-orange' 
                     : 'bg-muted border-border'
                 }`}>
-                  <tab.icon className={`w-7 h-7 ${active ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
+                  <img src={active ? '/icon-nav-active.png' : '/icon-nav-inactive.png'} className="w-8 h-8" alt="Hirschjagd" />
                 </div>
                 <span className={`text-[9px] font-orbitron font-bold uppercase tracking-wider mt-1 ${
                   active ? 'text-primary text-glow-orange' : 'text-muted-foreground'
