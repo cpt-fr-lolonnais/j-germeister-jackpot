@@ -29,6 +29,7 @@ export default function BanditPage({
 
   const [showSpecial, setShowSpecial] = useState<'doppel' | 'jackpot' | null>(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [localResult, setLocalResult] = useState<{ master: string; loser: string; jaegerConsumed: number } | null>(null);
 
   // Handle master reel stop
   const handleMasterStop = useCallback((name: string) => {
