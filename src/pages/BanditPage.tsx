@@ -294,7 +294,7 @@ export default function BanditPage({
             >
               {lastRound.jaegerConsumed === 1 ? (
                 <p className="font-orbitron text-lg text-foreground">
-                  {isDreifach ? '🎰' : '⚡'} <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! <JaegerBottle />
+                  <span className="text-primary font-bold">{lastRound.master}</span> TRINKT ALLEINE! <JaegerBottle />
                 </p>
               ) : (
                 <p className="font-orbitron text-lg text-foreground">
