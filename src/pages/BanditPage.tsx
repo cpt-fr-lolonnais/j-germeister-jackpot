@@ -245,7 +245,7 @@ export default function BanditPage({
                     <span className="text-primary font-bold">{master}</span> ist Meister UND Hirsch!
                     <br />Er tritt an gegen <span className="text-primary font-bold">{deer1 === master ? deer2 : deer1}</span>!
                   </p>
-                  <p className="font-arcade text-[10px] text-muted-foreground">Wer hat GEWONNEN?</p>
+                  <p className="font-arcade text-[10px] text-muted-foreground">Wer hat die Challenge VERLOREN?</p>
                   <div className="flex gap-3">
                     {[master!, deer1 === master ? deer2! : deer1!].map(name => (
                       <motion.button

@@ -59,7 +59,7 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
       cancelled = true;
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [spinning, names, spinDuration]);
+  }, [spinning, spinDuration]);
 
   useEffect(() => {
     if (revealed) {
