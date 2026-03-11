@@ -12,6 +12,17 @@ import { useGameState } from "@/hooks/useGameState";
 const AppContent = () => {
   const gs = useGameState();
 
+  if (gs.loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="font-fraktur text-5xl text-primary text-glow-orange mb-4">Hirschjagd</h1>
+          <p className="font-arcade text-[10px] text-muted-foreground animate-pulse">LADEN...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Toaster />
@@ -39,10 +50,20 @@ const AppContent = () => {
               addPlayer={gs.addPlayer}
               removePlayer={gs.removePlayer}
               togglePlayer={gs.togglePlayer}
+              isAdmin={gs.isAdmin}
+              checkPin={gs.checkPin}
+              logout={gs.logout}
             />
           } />
           <Route path="/stats" element={
-            <StatsPage stats={gs.stats} resetAll={gs.resetAll} deleteRound={gs.deleteRound} />
+            <StatsPage
+              stats={gs.stats}
+              resetAll={gs.resetAll}
+              deleteRound={gs.deleteRound}
+              isAdmin={gs.isAdmin}
+              checkPin={gs.checkPin}
+              logout={gs.logout}
+            />
           } />
           <Route path="*" element={<NotFound />} />
         </Routes>

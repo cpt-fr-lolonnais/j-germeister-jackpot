@@ -1,16 +1,22 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Stats } from '@/hooks/useGameState';
-import { X } from 'lucide-react';
+import { X, Shield, LogOut } from 'lucide-react';
 import JaegerBottle from '@/components/JaegerBottle';
+import AdminPinDialog from '@/components/AdminPinDialog';
 
 interface Props {
   stats: Stats;
   resetAll: () => void;
   deleteRound: (roundNumber: number) => void;
+  isAdmin: boolean;
+  checkPin: (pin: string) => Promise<boolean>;
+  logout: () => void;
 }
 
-export default function StatsPage({ stats, resetAll, deleteRound }: Props) {
+export default function StatsPage({ stats, resetAll, deleteRound, isAdmin, checkPin, logout }: Props) {
   const { jaegerRemaining, totalJaeger, playerStats, rounds } = stats;
+  const [pinOpen, setPinOpen] = useState(false);
 
   const leaderboard = Object.entries(playerStats)
     .map(([name, s]) => ({ name, drinks: s.drinks }))
@@ -25,12 +31,22 @@ export default function StatsPage({ stats, resetAll, deleteRound }: Props) {
     return { ...p, rank: currentRank };
   });
 
-  const lastRank = leaderboardWithRank[leaderboardWithRank.length - 1]?.rank ?? 1;
-  const firstRank = leaderboardWithRank[0]?.rank ?? 1;
-
   return (
     <div className="p-4 pb-24 max-w-md mx-auto">
-      <h1 className="font-fraktur text-4xl text-center text-primary text-glow-orange mb-6">Statistik</h1>
+      <div className="flex items-center justify-between mb-6">
+        <div className="w-10" />
+        <h1 className="font-fraktur text-4xl text-center text-primary text-glow-orange">Statistik</h1>
+        <button
+          onClick={() => isAdmin ? logout() : setPinOpen(true)}
+          className={`flex items-center gap-1 px-2 py-1 rounded text-[9px] font-orbitron transition ${
+            isAdmin 
+              ? 'text-primary bg-primary/10 border border-primary/30' 
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          {isAdmin ? <><LogOut className="w-3 h-3" /> Admin</> : <><Shield className="w-3 h-3" /> Admin</>}
+        </button>
+      </div>
 
       {/* Jäger Countdown */}
       <div className="neon-border rounded-lg p-4 mb-6 bg-card/50 text-center">
@@ -107,33 +123,39 @@ export default function StatsPage({ stats, resetAll, deleteRound }: Props) {
                     </div>
                   )}
                 </div>
-                <button
-                  onClick={() => {
-                    if (window.confirm(`Runde ${r.round} wirklich löschen? Counter und Statistik werden zurückgerechnet.`)) {
-                      deleteRound(r.round);
-                    }
-                  }}
-                  className="text-muted-foreground/30 hover:text-destructive transition flex-shrink-0 mt-0.5"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
+                {isAdmin && (
+                  <button
+                    onClick={() => {
+                      if (window.confirm(`Runde ${r.round} wirklich löschen? Counter und Statistik werden zurückgerechnet.`)) {
+                        deleteRound(r.round);
+                      }
+                    }}
+                    className="text-muted-foreground/30 hover:text-destructive transition flex-shrink-0 mt-0.5"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Reset */}
-      <button
-        onClick={() => {
-          if (window.confirm('Wirklich alles zurücksetzen? Alle Statistiken gehen verloren!')) {
-            resetAll();
-          }
-        }}
-        className="w-full py-3 rounded-lg font-arcade text-[10px] bg-destructive text-destructive-foreground hover:opacity-90 transition"
-      >
-        ALLES ZURÜCKSETZEN
-      </button>
+      {/* Reset - only for admin */}
+      {isAdmin && (
+        <button
+          onClick={() => {
+            if (window.confirm('Wirklich alles zurücksetzen? Alle Statistiken gehen verloren!')) {
+              resetAll();
+            }
+          }}
+          className="w-full py-3 rounded-lg font-arcade text-[10px] bg-destructive text-destructive-foreground hover:opacity-90 transition"
+        >
+          ALLES ZURÜCKSETZEN
+        </button>
+      )}
+
+      <AdminPinDialog open={pinOpen} onClose={() => setPinOpen(false)} checkPin={checkPin} />
     </div>
   );
 }
