@@ -168,9 +168,9 @@ export function useGameState() {
     const currentGS = gameStateRef.current;
     const master = currentGS.master!;
 
-    // 1. Insert round
-    const { data: roundsData } = await supabase.from('rounds').select('round_number').order('round_number', { ascending: false }).limit(1);
-    const nextRound = (roundsData?.[0]?.round_number ?? 0) + 1;
+    // 1. Insert round — use count instead of max for safety
+    const { count } = await supabase.from('rounds').select('*', { count: 'exact', head: true });
+    const nextRound = (count ?? 0) + 1;
 
     await supabase.from('rounds').insert({
       round_number: nextRound,
