@@ -84,7 +84,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
       {rounds.length > 0 && (
         <div className="mb-6">
           <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
-            📜 Rundenverlauf
+            RUNDENVERLAUF
           </h2>
           <div className="space-y-1 max-h-60 overflow-y-auto">
             {[...rounds].reverse().map((r) => (
