@@ -15,6 +15,17 @@ export default function StatsPage({ stats, resetAll }: Props) {
     .filter(p => p.drinks > 0)
     .sort((a, b) => b.drinks - a.drinks || a.name.localeCompare(b.name));
 
+  let currentRank = 1;
+  const leaderboardWithRank = leaderboard.map((p, i) => {
+    if (i > 0 && p.drinks < leaderboard[i - 1].drinks) {
+      currentRank = i + 1;
+    }
+    return { ...p, rank: currentRank };
+  });
+
+  const lastRank = leaderboardWithRank[leaderboardWithRank.length - 1]?.rank ?? 1;
+  const firstRank = leaderboardWithRank[0]?.rank ?? 1;
+
   return (
     <div className="p-4 pb-24 max-w-md mx-auto">
       <h1 className="font-fraktur text-4xl text-center text-primary text-glow-orange mb-6">Statistik</h1>
