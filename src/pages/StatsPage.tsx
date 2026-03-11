@@ -54,7 +54,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
       {/* Leaderboard */}
       <div className="mb-6">
         <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
-          🥃 Trink-Rangliste
+          <JaegerBottle className="w-3 h-5 inline-block" /> Trink-Rangliste
         </h2>
         {leaderboardWithRank.length === 0 ? (
           <p className="text-center text-muted-foreground text-xs font-orbitron">Noch keine Runden gespielt.</p>
