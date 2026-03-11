@@ -130,7 +130,7 @@ export default function BanditPage({
   const lastRound = localResult || stats.rounds[stats.rounds.length - 1];
 
   return (
-    <div className="p-4 pb-24 max-w-md mx-auto text-center relative overflow-hidden">
+    <div className="p-4 pt-8 pb-24 max-w-md mx-auto text-center relative overflow-hidden">
       {/* Special effect overlays */}
       <AnimatePresence>
         {showSpecial === 'jackpot' && (

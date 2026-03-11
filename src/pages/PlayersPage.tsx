@@ -28,7 +28,7 @@ export default function PlayersPage({ players, addPlayer, removePlayer, togglePl
   };
 
   return (
-    <div className="p-4 pb-24 max-w-md mx-auto">
+    <div className="p-4 pt-8 pb-24 max-w-md mx-auto">
       <div className="flex items-center justify-between mb-2">
         <div className="w-10" />
         <h1 className="font-fraktur text-4xl text-center text-primary text-glow-orange">Spieler</h1>
@@ -55,7 +55,7 @@ export default function PlayersPage({ players, addPlayer, removePlayer, togglePl
             onChange={e => setName(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleAdd()}
             placeholder="Name eingeben..."
-            className="flex-1 bg-input border border-border rounded-lg px-4 py-3 text-foreground font-orbitron text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex-1 bg-input border border-border rounded-lg px-4 py-3 text-foreground font-orbitron text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           />
           <button
             onClick={handleAdd}
