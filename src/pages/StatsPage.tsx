@@ -71,7 +71,7 @@ export default function StatsPage({ stats, resetAll, deleteRound, isAdmin, check
       {/* Leaderboard */}
       <div className="mb-6">
         <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
-          TRINK-RANGLISTE
+          SCHUSS-STATISTIK
         </h2>
         {leaderboardWithRank.length === 0 ? (
           <p className="text-center text-muted-foreground text-xs font-orbitron">Noch keine Runden gespielt.</p>
@@ -101,7 +101,7 @@ export default function StatsPage({ stats, resetAll, deleteRound, isAdmin, check
       {rounds.length > 0 && (
         <div className="mb-6">
           <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
-            RUNDENVERLAUF
+            JAGDVERLAUF
           </h2>
           <div className="space-y-1">
             {[...rounds].reverse().map((r) => (
