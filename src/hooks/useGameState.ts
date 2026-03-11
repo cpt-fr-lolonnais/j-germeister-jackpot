@@ -53,6 +53,16 @@ export function useGameState() {
     totalJaeger: 40, jaegerRemaining: 40, playerStats: {}, rounds: []
   }));
 
+  // Migration: Reset corrupted stats from previous version
+  useEffect(() => {
+    const version = localStorage.getItem('hj_version');
+    if (version !== '2') {
+      localStorage.removeItem('hj_stats');
+      localStorage.setItem('hj_version', '2');
+      setStatsState({ totalJaeger: 40, jaegerRemaining: 40, playerStats: {}, rounds: [] });
+    }
+  }, []);
+
   const setPlayers = useCallback((p: Player[] | ((prev: Player[]) => Player[])) => {
     setPlayersState(prev => {
       const next = typeof p === 'function' ? p(prev) : p;
@@ -151,17 +161,17 @@ export function useGameState() {
 
   const resolveChallengeNormal = useCallback((loser: string) => {
     const { master, deer1, deer2 } = gameState;
-    recordDrink(master!, loser, deer1!, deer2!, 2);
+    recordDrink(loser, master!, deer1!, deer2!, 2);
   }, [gameState, recordDrink]);
 
   const resolveChallengeDoppel = useCallback((winner: string) => {
     const { master, deer1, deer2 } = gameState;
     const otherDeer = deer1 === master ? deer2! : deer1!;
     if (winner === master) {
-      // Master won → both drink
-      recordDrink(master!, otherDeer, deer1!, deer2!, 2);
+      // Master gewinnt → otherDeer ist Verlierer, beide trinken
+      recordDrink(otherDeer, master!, deer1!, deer2!, 2);
     } else {
-      // Master lost → master drinks alone
+      // Master verliert → nur Master trinkt
       recordDrink(master!, null, deer1!, deer2!, 1);
     }
   }, [gameState, recordDrink]);
