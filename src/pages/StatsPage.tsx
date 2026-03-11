@@ -13,7 +13,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
   const leaderboard = Object.entries(playerStats)
     .map(([name, s]) => ({ name, drinks: s.drinks }))
     .filter(p => p.drinks > 0)
-    .sort((a, b) => b.drinks - a.drinks);
+    .sort((a, b) => b.drinks - a.drinks || a.name.localeCompare(b.name));
 
   return (
     <div className="p-4 pb-24 max-w-md mx-auto">
