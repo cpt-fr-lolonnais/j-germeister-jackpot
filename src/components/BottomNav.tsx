@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Users, BarChart3, Crosshair } from 'lucide-react';
+import { Users, BarChart3 } from 'lucide-react';
 
 const tabs = [
   { path: '/players', label: 'Spieler', icon: Users, isMain: false },
