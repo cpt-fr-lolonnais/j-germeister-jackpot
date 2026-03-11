@@ -78,8 +78,12 @@ export default function BanditPage({
       setShowSpecial('doppel');
       confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 }, colors: ['#E77917', '#1D3C34'] });
       setTimeout(() => setShowSpecial(null), 2000);
+    } else if (!isDreifach && !isDoppel && deer1 && deer2 && deer1 === deer2 && phase === 'result') {
+      setShowSpecial('doppel');
+      confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 }, colors: ['#E77917', '#1D3C34'] });
+      setTimeout(() => setShowSpecial(null), 2000);
     }
-  }, [isDreifach, isDoppel, phase]);
+  }, [isDreifach, isDoppel, phase, deer1, deer2]);
 
   const handleSpin = () => {
     if (isSpinning) return;
