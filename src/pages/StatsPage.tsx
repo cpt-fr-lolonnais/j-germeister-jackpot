@@ -13,7 +13,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
   const leaderboard = Object.entries(playerStats)
     .map(([name, s]) => ({ name, drinks: s.drinks }))
     .filter(p => p.drinks > 0)
-    .sort((a, b) => b.drinks - a.drinks);
+    .sort((a, b) => b.drinks - a.drinks || a.name.localeCompare(b.name));
 
   return (
     <div className="p-4 pb-24 max-w-md mx-auto">
@@ -77,7 +77,13 @@ export default function StatsPage({ stats, resetAll }: Props) {
           <div className="space-y-1 max-h-60 overflow-y-auto">
             {[...rounds].reverse().map((r) => (
               <div key={r.round} className="text-xs font-orbitron text-muted-foreground p-2 rounded bg-card/50 border border-border">
-                <span className="text-primary">R{r.round}:</span> Meister {r.master} → {r.deer1} vs {r.deer2} → {r.loser} ({r.jaegerConsumed}🥃)
+                <span className="text-primary">R{r.round}:</span>{' '}
+                {r.jaegerConsumed === 1 ? (
+                  <>{r.master} trinkt alleine</>
+                ) : (
+                  <>Meister {r.master} → {r.deer1} vs {r.deer2} · Verlierer: {r.loser}</>
+                )}
+                {' '}({r.jaegerConsumed}🥃)
               </div>
             ))}
           </div>

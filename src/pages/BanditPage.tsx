@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import SlotReel from '@/components/SlotReel';
@@ -23,7 +23,7 @@ export default function BanditPage({
   startDeerSpin, revealDeers, resolveChallengeNormal, resolveChallengeDoppel, resetRound, pickRandom
 }: Props) {
   const { phase, master, deer1, deer2, isDoppel, isDreifach } = gameState;
-  const names = activePlayers.map(p => p.name);
+  const names = useMemo(() => activePlayers.map(p => p.name), [activePlayers]);
   const canSpin = activePlayers.length >= 3 && stats.jaegerRemaining > 0;
 
   const [showSpecial, setShowSpecial] = useState<'doppel' | 'jackpot' | null>(null);
@@ -245,7 +245,7 @@ export default function BanditPage({
                     <span className="text-primary font-bold">{master}</span> ist Meister UND Hirsch!
                     <br />Er tritt an gegen <span className="text-primary font-bold">{deer1 === master ? deer2 : deer1}</span>!
                   </p>
-                  <p className="font-arcade text-[10px] text-muted-foreground">Wer hat GEWONNEN?</p>
+                  <p className="font-arcade text-[10px] text-muted-foreground">Wer hat die Challenge VERLOREN?</p>
                   <div className="flex gap-3">
                     {[master!, deer1 === master ? deer2! : deer1!].map(name => (
                       <motion.button

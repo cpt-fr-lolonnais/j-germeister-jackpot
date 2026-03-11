@@ -17,10 +17,12 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const onStopRef = useRef(onStop);
   onStopRef.current = onStop;
+  const namesRef = useRef(names);
+  namesRef.current = names;
 
   useEffect(() => {
     if (!spinning) return;
-    if (names.length === 0) return;
+    if (namesRef.current.length === 0) return;
 
     setStopped(false);
     let speed = 50;
@@ -30,12 +32,12 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
     const tick = () => {
       if (cancelled) return;
 
-      const randomName = names[Math.floor(Math.random() * names.length)];
+      const randomName = namesRef.current[Math.floor(Math.random() * namesRef.current.length)];
       setDisplayName(randomName);
       elapsed += speed;
 
       if (elapsed > spinDuration) {
-        const finalName = names[Math.floor(Math.random() * names.length)];
+        const finalName = namesRef.current[Math.floor(Math.random() * namesRef.current.length)];
         setDisplayName(finalName);
         setStopped(true);
         onStopRef.current?.(finalName);
@@ -57,7 +59,7 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
       cancelled = true;
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [spinning, names, spinDuration]);
+  }, [spinning, spinDuration]);
 
   useEffect(() => {
     if (revealed) {

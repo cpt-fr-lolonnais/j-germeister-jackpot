@@ -164,15 +164,15 @@ export function useGameState() {
     recordDrink(loser, master!, deer1!, deer2!, 2);
   }, [gameState, recordDrink]);
 
-  const resolveChallengeDoppel = useCallback((winner: string) => {
+  const resolveChallengeDoppel = useCallback((loser: string) => {
     const { master, deer1, deer2 } = gameState;
     const otherDeer = deer1 === master ? deer2! : deer1!;
-    if (winner === master) {
-      // Master gewinnt → otherDeer ist Verlierer, beide trinken
-      recordDrink(otherDeer, master!, deer1!, deer2!, 2);
-    } else {
-      // Master verliert → nur Master trinkt
+    if (loser === master) {
+      // Master hat verloren → trinkt alleine
       recordDrink(master!, null, deer1!, deer2!, 1);
+    } else {
+      // Anderer Hirsch hat verloren → beide trinken
+      recordDrink(otherDeer, master!, deer1!, deer2!, 2);
     }
   }, [gameState, recordDrink]);
 
