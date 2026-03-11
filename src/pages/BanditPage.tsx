@@ -169,6 +169,15 @@ export default function BanditPage({
         </div>
       </div>
 
+      {/* Wheel of Torture Titel */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="flex-1 h-px bg-primary/40" />
+        <span className="font-arcade text-[10px] text-primary text-glow-orange tracking-widest whitespace-nowrap">
+          WHEEL OF TORTURE
+        </span>
+        <div className="flex-1 h-px bg-primary/40" />
+      </div>
+
       {isGameOver ? (
         <motion.div
           initial={{ scale: 0 }}
