@@ -17,10 +17,12 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const onStopRef = useRef(onStop);
   onStopRef.current = onStop;
+  const namesRef = useRef(names);
+  namesRef.current = names;
 
   useEffect(() => {
     if (!spinning) return;
-    if (names.length === 0) return;
+    if (namesRef.current.length === 0) return;
 
     setStopped(false);
     let speed = 50;
