@@ -24,6 +24,7 @@ export interface RoundLog {
   deer2: string;
   loser: string | null;
   jaegerConsumed: number;
+  timestamp: number;
 }
 
 export interface Stats {
@@ -153,7 +154,8 @@ export function useGameState() {
           deer1: d1,
           deer2: d2,
           loser: loserOrDrinker,
-          jaegerConsumed: jaegerCount
+          jaegerConsumed: jaegerCount,
+          timestamp: Date.now()
         }]
       };
     });
@@ -171,10 +173,8 @@ export function useGameState() {
     const { master, deer1, deer2 } = gameState;
     const otherDeer = deer1 === master ? deer2! : deer1!;
     if (loser === master) {
-      // Master hat verloren → trinkt alleine
       recordDrink(master!, null, deer1!, deer2!, 1);
     } else {
-      // Anderer Hirsch hat verloren → beide trinken
       recordDrink(otherDeer, master!, deer1!, deer2!, 2);
     }
   }, [gameState, recordDrink]);
@@ -182,6 +182,42 @@ export function useGameState() {
   const resetRound = useCallback(() => {
     setGameState({ phase: 'idle', master: null, deer1: null, deer2: null, isDoppel: false, isDreifach: false });
   }, []);
+
+  const deleteRound = useCallback((roundNumber: number) => {
+    setStats(prev => {
+      const roundToDelete = prev.rounds.find(r => r.round === roundNumber);
+      if (!roundToDelete) return prev;
+
+      const newPlayerStats = { ...prev.playerStats };
+      
+      if (roundToDelete.loser && newPlayerStats[roundToDelete.loser]) {
+        newPlayerStats[roundToDelete.loser] = { 
+          drinks: Math.max(0, newPlayerStats[roundToDelete.loser].drinks - 1) 
+        };
+      }
+      if (roundToDelete.jaegerConsumed === 2) {
+        const secondDrinker = roundToDelete.loser !== roundToDelete.master 
+          ? roundToDelete.master 
+          : null;
+        if (secondDrinker && newPlayerStats[secondDrinker]) {
+          newPlayerStats[secondDrinker] = { 
+            drinks: Math.max(0, newPlayerStats[secondDrinker].drinks - 1) 
+          };
+        }
+      }
+
+      const newRounds = prev.rounds
+        .filter(r => r.round !== roundNumber)
+        .map((r, i) => ({ ...r, round: i + 1 }));
+
+      return {
+        ...prev,
+        jaegerRemaining: Math.min(prev.totalJaeger, prev.jaegerRemaining + roundToDelete.jaegerConsumed),
+        playerStats: newPlayerStats,
+        rounds: newRounds
+      };
+    });
+  }, [setStats]);
 
   const resetAll = useCallback(() => {
     setStats({ totalJaeger: 40, jaegerRemaining: 40, playerStats: {}, rounds: [] });
@@ -191,6 +227,6 @@ export function useGameState() {
   return {
     players, activePlayers, addPlayer, removePlayer, togglePlayer,
     gameState, startSpin, revealMaster, startDeerSpin, revealDeers, resolveChallengeNormal, resolveChallengeDoppel, resetRound,
-    stats, resetAll, pickRandom
+    stats, resetAll, deleteRound, pickRandom
   };
 }

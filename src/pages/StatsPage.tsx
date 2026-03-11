@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
 import { Stats } from '@/hooks/useGameState';
-import { Trophy, Turtle } from 'lucide-react';
+import { X } from 'lucide-react';
 import JaegerBottle from '@/components/JaegerBottle';
 
 interface Props {
   stats: Stats;
   resetAll: () => void;
+  deleteRound: (roundNumber: number) => void;
 }
 
-export default function StatsPage({ stats, resetAll }: Props) {
+export default function StatsPage({ stats, resetAll, deleteRound }: Props) {
   const { jaegerRemaining, totalJaeger, playerStats, rounds } = stats;
 
   const leaderboard = Object.entries(playerStats)
@@ -86,16 +87,34 @@ export default function StatsPage({ stats, resetAll }: Props) {
           <h2 className="font-arcade text-[10px] text-muted-foreground uppercase tracking-widest mb-3">
             RUNDENVERLAUF
           </h2>
-          <div className="space-y-1 max-h-60 overflow-y-auto">
+          <div className="space-y-1">
             {[...rounds].reverse().map((r) => (
-              <div key={r.round} className="text-xs font-orbitron text-muted-foreground p-2 rounded bg-card/50 border border-border">
-                <span className="text-primary">R{r.round}:</span>{' '}
-                {r.jaegerConsumed === 1 ? (
-                  <>{r.master} trinkt alleine</>
-                ) : (
-                  <>Jäger {r.master} → {r.deer1} vs {r.deer2} · Verlierer: {r.loser}</>
-                )}
-                {' '}({r.jaegerConsumed}<JaegerBottle className="w-3 h-5 inline-block" />)
+              <div key={r.round} className="text-xs font-orbitron text-muted-foreground p-2 rounded bg-card/50 border border-border flex items-start justify-between gap-2">
+                <div>
+                  <span className="text-primary">R{r.round}:</span>{' '}
+                  {r.jaegerConsumed === 1 ? (
+                    <>{r.loser || r.master} trinkt alleine</>
+                  ) : r.deer1 === r.deer2 ? (
+                    <>{r.master} und {r.loser} trinken</>
+                  ) : (
+                    <>{r.master} und {r.loser} trinken · {r.deer1 === r.loser ? r.deer2 : r.deer1 === r.master ? r.deer2 : r.deer1} entkommt</>
+                  )}
+                  {r.timestamp && (
+                    <span className="text-muted-foreground/50 text-[10px] ml-2">
+                      {new Date(r.timestamp).toLocaleString('de-CH', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  )}
+                </div>
+                <button
+                  onClick={() => {
+                    if (window.confirm(`Runde ${r.round} wirklich löschen? Counter und Statistik werden zurückgerechnet.`)) {
+                      deleteRound(r.round);
+                    }
+                  }}
+                  className="text-muted-foreground/30 hover:text-destructive transition flex-shrink-0 mt-0.5"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
               </div>
             ))}
           </div>
