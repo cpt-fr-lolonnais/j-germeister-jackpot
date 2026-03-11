@@ -95,10 +95,10 @@ export default function BanditPage({
 
   const getButtonLabel = () => {
     switch (phase) {
-      case 'idle': return 'SPIN!';
-      case 'master_spinning': return 'DREHT...';
+      case 'idle': return 'SHOOT!';
+      case 'master_spinning': return 'LADEN...';
       case 'master_revealed': return 'HIRSCHE JAGEN!';
-      case 'deer_spinning': return 'DREHT...';
+      case 'deer_spinning': return 'LADEN...';
       default: return '';
     }
   };
@@ -169,14 +169,6 @@ export default function BanditPage({
         </div>
       </div>
 
-      {/* Wheel of Torture Titel */}
-      <div className="flex items-center gap-3 mb-4">
-        <div className="flex-1 h-px bg-primary/40" />
-        <span className="font-arcade text-[10px] text-primary text-glow-orange tracking-widest whitespace-nowrap">
-          WHEEL OF TORTURE
-        </span>
-        <div className="flex-1 h-px bg-primary/40" />
-      </div>
 
       {isGameOver ? (
         <motion.div
@@ -199,7 +191,7 @@ export default function BanditPage({
               names={names}
               spinning={phase === 'master_spinning'}
               onStop={handleMasterStop}
-              label="MEISTER"
+              label="JÄGER"
               revealed={master}
               spinDuration={2500}
             />
@@ -252,7 +244,7 @@ export default function BanditPage({
               {isDoppel ? (
                 <>
                   <p className="font-orbitron text-sm text-foreground">
-                    <span className="text-primary font-bold">{master}</span> ist Meister UND Hirsch!
+                    <span className="text-primary font-bold">{master}</span> ist Jäger UND Hirsch!
                     <br />Er tritt an gegen <span className="text-primary font-bold">{deer1 === master ? deer2 : deer1}</span>!
                   </p>
                   <p className="font-arcade text-[10px] text-muted-foreground">Wer hat die Challenge VERLOREN?</p>
