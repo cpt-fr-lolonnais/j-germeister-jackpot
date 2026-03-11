@@ -276,8 +276,16 @@ export function useGameState() {
 
   // --- RESET ALL ---
   const resetAll = useCallback(async () => {
-    await supabase.from('rounds').delete().neq('round_number', -1); // delete all
-    await supabase.from('player_drinks').update({ drinks: 0 }).neq('name', ''); // reset all
+    // Delete all rounds
+    await supabase.from('rounds').delete().gte('round_number', 0);
+    // Reset all player drink counts to 0
+    const { data: allDrinks } = await supabase.from('player_drinks').select('name');
+    if (allDrinks) {
+      for (const d of allDrinks) {
+        await supabase.from('player_drinks').update({ drinks: 0 }).eq('name', d.name);
+      }
+    }
+    // Reset jaeger counter
     await supabase.from('game_config').update({ jaeger_remaining: 40 }).eq('id', 'main');
     resetRound();
   }, [resetRound]);
