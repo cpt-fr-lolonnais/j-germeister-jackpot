@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Stats } from '@/hooks/useGameState';
 import { Trophy, Turtle } from 'lucide-react';
+import JaegerBottle from '@/components/JaegerBottle';
 
 interface Props {
   stats: Stats;
