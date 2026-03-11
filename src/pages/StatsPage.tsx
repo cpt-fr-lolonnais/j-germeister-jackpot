@@ -95,7 +95,7 @@ export default function StatsPage({ stats, resetAll }: Props) {
                 ) : (
                   <>Meister {r.master} → {r.deer1} vs {r.deer2} · Verlierer: {r.loser}</>
                 )}
-                {' '}({r.jaegerConsumed}🥃)
+                {' '}({r.jaegerConsumed}<JaegerBottle className="w-3 h-5 inline-block" />)
               </div>
             ))}
           </div>

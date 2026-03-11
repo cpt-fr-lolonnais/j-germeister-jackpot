@@ -299,7 +299,7 @@ export default function BanditPage({
                 <p className="font-orbitron text-lg text-foreground">
                   🦌 <span className="text-primary font-bold">{lastRound.master}</span> + <span className="text-primary font-bold">
                     {lastRound.loser}
-                  </span> trinken! 🥃
+                  </span> trinken! <JaegerBottle />
                 </p>
               )}
               <motion.button
