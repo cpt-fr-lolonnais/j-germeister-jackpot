@@ -121,11 +121,14 @@ export function useGameState() {
     const master = gameState.master!;
     const isDreifach = master === d1 && master === d2;
     const isDoppel = !isDreifach && (master === d1 || master === d2);
+    const isSameDeer = !isDreifach && !isDoppel && d1 === d2;
     
     if (isDreifach) {
       setGameState(prev => ({ ...prev, phase: 'result', deer1: d1, deer2: d2, isDoppel: false, isDreifach: true }));
-      // Auto-resolve jackpot
       recordDrink(master, null, d1, d2, 1, true);
+    } else if (isSameDeer) {
+      setGameState(prev => ({ ...prev, phase: 'result', deer1: d1, deer2: d2, isDoppel: false, isDreifach: false }));
+      recordDrink(d1, master, d1, d2, 2, true);
     } else {
       setGameState(prev => ({ ...prev, phase: 'challenge_input', deer1: d1, deer2: d2, isDoppel, isDreifach: false }));
     }
