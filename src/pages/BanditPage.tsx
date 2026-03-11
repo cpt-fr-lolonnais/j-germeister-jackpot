@@ -14,7 +14,7 @@ interface Props {
   startDeerSpin: () => void;
   revealDeers: (d1: string, d2: string) => void;
   resolveChallengeNormal: (loser: string) => void;
-  resolveChallengeDoppel: (winner: string) => void;
+  resolveChallengeDoppel: (loser: string) => void;
   resetRound: () => void;
   pickRandom: () => string;
 }
