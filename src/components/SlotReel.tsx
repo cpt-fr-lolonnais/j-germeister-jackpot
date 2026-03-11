@@ -32,7 +32,7 @@ export default function SlotReel({ names, spinning, onStop, label, revealed, ina
     const tick = () => {
       if (cancelled) return;
 
-      const randomName = names[Math.floor(Math.random() * names.length)];
+      const randomName = namesRef.current[Math.floor(Math.random() * namesRef.current.length)];
       setDisplayName(randomName);
       elapsed += speed;
 
