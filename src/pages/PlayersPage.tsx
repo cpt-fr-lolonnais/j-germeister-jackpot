@@ -44,7 +44,7 @@ export default function PlayersPage({ players, addPlayer, removePlayer, togglePl
         </button>
       </div>
       <p className="text-center text-muted-foreground text-xs font-orbitron mb-6">
-        {activeCount} aktiv · mind. 3 für den Bandit
+        {activeCount} aktiv · mind. 3 für die Jagd
       </p>
 
       {/* Add player - only for admin */}
