@@ -113,8 +113,10 @@ export default function StatsPage({ stats, resetAll, deleteRound, isAdmin, check
                       <>{r.loser || r.master} trinkt alleine</>
                     ) : r.deer1 === r.deer2 ? (
                       <>{r.master} + {r.loser} trinken</>
+                    ) : (r.master === r.deer1 || r.master === r.deer2) ? (
+                      <>{r.master} + {r.loser} trinken</>
                     ) : (
-                      <>{r.master} + {r.loser} trinken · {r.deer1 === r.loser ? r.deer2 : r.deer1 === r.master ? r.deer2 : r.deer1} entkommt</>
+                      <>{r.master} + {r.loser} trinken · {r.loser === r.deer1 ? r.deer2 : r.deer1} entkommt</>
                     )}
                   </div>
                   {r.timestamp && (
